@@ -126,13 +126,13 @@ export const Prizes = ({ isLocal }: { isLocal: boolean }) => {
             userData={{ id: p.id }}
           >
             {p.type === 'bugdroid' ? (
-              <ShimaEnaga variant="giant" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
+              <ShimaEnaga variant="giant" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} scale={p.scale || 2.2} />
             ) : p.type === 'dodecahedron' ? (
-              <ShimaEnaga variant="fancy" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
+              <ShimaEnaga variant="fancy" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} scale={p.scale || 1.0} />
             ) : p.type === 'box' ? (
-              <ShimaEnaga variant="square" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
+              <ShimaEnaga variant="square" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} scale={p.scale || 1.0} />
             ) : (
-              <ShimaEnaga variant="round" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
+              <ShimaEnaga variant="round" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} scale={p.scale || 1.0} />
             )}
           </RigidBody>
         );

@@ -658,7 +658,7 @@ export const UI = () => {
 
                   <button
                     onClick={() => { audio.playClickSFX(); joinQueue(gameDuration, selectedPlushies); }}
-                    className="w-full bg-[#34A853] hover:bg-[#2c8d45] text-white font-mono font-black py-4 rounded-2xl shadow-lg shadow-[#34A853]/15 transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm cursor-pointer border-t border-white/10"
+                    className="w-full bg-[#34A853] hover:bg-[#2c8d45] text-white font-mono font-black py-4 rounded-2xl shadow-lg shadow-[#34A853]/15 transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm cursor-pointer border-t border-white/10 pointer-events-auto"
                   >
                     <Play size={16} fill="currentColor" /> COIN-START / 投入金幣開始
                   </button>

@@ -62,8 +62,11 @@ async function startServer() {
       
       const type = types[Math.floor(Math.random() * types.length)];
       const color = colors[Math.floor(Math.random() * colors.length)];
-      const value = colorValues[color] * typeMultipliers[type];
       const toyType = validToys[Math.floor(Math.random() * validToys.length)];
+      
+      const sizes = [0.6, 0.8, 1.0, 1.0, 1.2, 1.5];
+      const scale = sizes[Math.floor(Math.random() * sizes.length)];
+      const value = Math.floor(colorValues[color] * typeMultipliers[type] * scale);
 
       prizes.push({
         id: `prize_${uuidv4()}`,
@@ -71,6 +74,7 @@ async function startServer() {
         toyType,
         color,
         value,
+        scale,
         position: [x, Math.random()*4 + 1, z],
         rotation: [0,0,0,1]
       });
@@ -88,7 +92,8 @@ async function startServer() {
         type: 'bugdroid',
         toyType,
         color: '#FBBC04', // Rich Golden Yellow
-        value: 100,
+        value: 150,
+        scale: 2.2, // Giant size
         position: [x, Math.random()*2 + 5, z],
         rotation: [0,0,0,1]
       });
@@ -132,10 +137,10 @@ async function startServer() {
     });
 
     socket.on('join', (name: string) => {
-      let finalName = name.toUpperCase().slice(0, 3);
-      if (finalName.length !== 3 || !/^[A-Z]{3}$/.test(finalName) || DISALLOW_LIST.has(finalName)) {
+      let finalName = name.slice(0, 15);
+      if (finalName.length < 1 || DISALLOW_LIST.has(finalName.toUpperCase())) {
         playerCount++;
-        finalName = `P${playerCount}`.slice(0, 3); // Fallback
+        finalName = `P${playerCount}`; // Fallback
       }
       
       const existing = players[socket.id];
