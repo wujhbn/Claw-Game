@@ -5,6 +5,7 @@
 
 import { create } from 'zustand';
 import { io, Socket } from 'socket.io-client';
+import { audio } from './utils/audio';
 
 interface GameState {
   socket: Socket | null;
@@ -20,7 +21,7 @@ interface GameState {
   
   connect: () => void;
   join: (name: string) => void;
-  joinQueue: () => void;
+  joinQueue: (durationSeconds?: number, selectedPlushies?: string[]) => void;
   updateClaw: (data: any) => void;
   updatePrizes: (data: any) => void;
   capturePrize: (prizeId: string) => void;
@@ -87,6 +88,9 @@ export const useGameStore = create<GameState>((set, get) => ({
     });
 
     socket.on('prize_removed', ({ prizeId, playerId, score }) => {
+      if (playerId === get().myId) {
+        audio.playWinSFX();
+      }
       set((state) => {
         const newPlayers = { ...state.players };
         if (newPlayers[playerId]) {
@@ -114,7 +118,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   join: (name) => get().socket?.emit('join', name),
-  joinQueue: () => get().socket?.emit('join_queue'),
+  joinQueue: (durationSeconds, selectedPlushies) => get().socket?.emit('join_queue', durationSeconds, selectedPlushies),
   updateClaw: (data) => {
     set((state) => ({ clawState: { ...state.clawState, ...data } }));
     get().socket?.emit('claw_update', data);

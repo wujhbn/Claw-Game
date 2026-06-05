@@ -8,6 +8,7 @@ import { useFrame } from '@react-three/fiber';
 import { RigidBody, CuboidCollider } from '@react-three/rapier';
 import * as THREE from 'three';
 import { useGameStore, prizeRefs } from '../store';
+import { audio } from '../utils/audio';
 
 export const Claw = ({ isLocal }: { isLocal: boolean }) => {
   const clawState = useGameStore(state => state.clawState);
@@ -41,14 +42,28 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
   useEffect(() => {
     if (!isLocal) return;
     const down = (e: KeyboardEvent) => {
-      if(e.key === 'w' || e.key === 'ArrowUp') keys.current.w = true;
-      if(e.key === 's' || e.key === 'ArrowDown') keys.current.s = true;
-      if(e.key === 'a' || e.key === 'ArrowLeft') keys.current.a = true;
-      if(e.key === 'd' || e.key === 'ArrowRight') keys.current.d = true;
+      if(e.key === 'w' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        keys.current.w = true;
+      }
+      if(e.key === 's' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        keys.current.s = true;
+      }
+      if(e.key === 'a' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        keys.current.a = true;
+      }
+      if(e.key === 'd' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        keys.current.d = true;
+      }
       if(e.key === ' ') {
+         e.preventDefault();
          if (localState.current.state === 'idle') {
            localState.current.state = 'dropping';
            updateClaw({ state: 'dropping' });
+           audio.playDropSFX();
          }
       }
     };
@@ -70,6 +85,7 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
       if (localState.current.state === 'idle') {
         localState.current.state = 'dropping';
         updateClaw({ state: 'dropping' });
+        audio.playDropSFX();
       }
     };
     window.addEventListener('force_drop', forceDrop);
@@ -103,6 +119,7 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
       window.removeEventListener('force_drop', forceDrop);
       window.removeEventListener('claw_move_start', onMoveStart);
       window.removeEventListener('claw_move_end', onMoveEnd);
+      audio.stopMoveSound();
     };
   }, [isLocal, updateClaw]);
 
@@ -112,6 +129,13 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
       const speed = 5 * delta;
       
       if (ls.state === 'idle') {
+        const anyKeyPressed = keys.current.w || keys.current.s || keys.current.a || keys.current.d;
+        if (anyKeyPressed) {
+          audio.startMoveSound();
+        } else {
+          audio.stopMoveSound();
+        }
+        
         if (keys.current.w) ls.z -= speed;
         if (keys.current.s) ls.z += speed;
         if (keys.current.a) ls.x -= speed;
@@ -119,6 +143,14 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
         
         ls.x = THREE.MathUtils.clamp(ls.x, -4.5, 4.5);
         ls.z = THREE.MathUtils.clamp(ls.z, -4.5, 4.5);
+
+        // Prevent moving into the chute partition wall area (x < -1.2, z > 1.2) to avoid clipping
+        if (ls.z > 1.2) {
+          ls.x = Math.max(ls.x, -1.2);
+        }
+        if (ls.x < -1.2) {
+          ls.z = Math.min(ls.z, 1.2);
+        }
         
         if (keys.current.w || keys.current.s || keys.current.a || keys.current.d) {
           if (state.clock.elapsedTime - lastEmit.current > 0.05) { // Throttle to ~20fps
@@ -128,6 +160,7 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
         }
       }
       else if (ls.state === 'dropping') {
+        audio.stopMoveSound();
         ls.y -= 6 * delta;
         if (ls.y <= 2.5) {
           ls.y = 2.5;
@@ -158,12 +191,14 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
           if (closestPrize) {
             ls.grabbedPrizeId = closestPrize.id;
             updateClaw({ grabbedPrizeId: closestPrize.id });
+            audio.playGrabSFX();
           }
         }
 
         if (ls.timer > 1) {
           ls.state = 'raising';
           updateClaw({ state: 'raising', prongsClosed: true, grabbedPrizeId: ls.grabbedPrizeId });
+          audio.playRaiseSFX();
         }
       }
       else if (ls.state === 'raising') {
@@ -190,9 +225,20 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
           updateClaw({ grabbedPrizeId: null });
         }
         ls.timer += delta;
-        if (ls.timer > 3.0) {
+        if (ls.timer > 1.5) {
+          ls.state = 'returning_home';
+          updateClaw({ state: 'returning_home' });
+        }
+      }
+      else if (ls.state === 'returning_home') {
+        ls.prongsClosed = false;
+        ls.x = THREE.MathUtils.lerp(ls.x, 0, 3 * delta);
+        ls.z = THREE.MathUtils.lerp(ls.z, 0, 3 * delta);
+        if (Math.abs(ls.x - 0) < 0.1 && Math.abs(ls.z - 0) < 0.1) {
+          ls.x = 0;
+          ls.z = 0;
           ls.state = 'idle';
-          updateClaw({ state: 'idle', prongsClosed: false });
+          updateClaw({ x: 0, z: 0, state: 'idle', prongsClosed: false });
         }
       }
 

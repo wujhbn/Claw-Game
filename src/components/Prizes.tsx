@@ -58,7 +58,7 @@ export const Prizes = ({ isLocal }: { isLocal: boolean }) => {
             try {
               const p = ref.translation();
               
-              if (p.y < -0.5 && !capturedPrizes.current.has(prize.id)) {
+              if (p.y < -4.0 && !capturedPrizes.current.has(prize.id)) {
                 capturedPrizes.current.add(prize.id);
                 capturePrize(prize.id);
               } else {
@@ -126,13 +126,13 @@ export const Prizes = ({ isLocal }: { isLocal: boolean }) => {
             userData={{ id: p.id }}
           >
             {p.type === 'bugdroid' ? (
-              <ShimaEnaga variant="giant" color={p.color} position={[0, -0.45, 0]} />
+              <ShimaEnaga variant="giant" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
             ) : p.type === 'dodecahedron' ? (
-              <ShimaEnaga variant="fancy" color={p.color} position={[0, -0.45, 0]} />
+              <ShimaEnaga variant="fancy" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
             ) : p.type === 'box' ? (
-              <ShimaEnaga variant="square" color={p.color} position={[0, -0.45, 0]} />
+              <ShimaEnaga variant="square" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
             ) : (
-              <ShimaEnaga variant="round" color={p.color} position={[0, -0.45, 0]} />
+              <ShimaEnaga variant="round" color={p.color} position={[0, -0.45, 0]} toyType={p.toyType} />
             )}
           </RigidBody>
         );

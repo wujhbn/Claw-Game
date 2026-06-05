@@ -44,8 +44,14 @@ async function startServer() {
     'ASS', 'CUM', 'FAG', 'FUK', 'FUQ', 'GAY', 'JEW', 'JIZ', 'KKK', 'SEX', 'TIT', 'VAG', 'WAP', 'WTF', 'WTG', 'DIK', 'COK', 'FUC', 'FUX', 'NIG', 'NGR', 'BCH', 'BIT', 'HOE', 'SLT', 'CUN', 'KYS'
   ]);
   
-  function initPrizes() {
+  const ALL_TOY_TYPES = ['shima_enaga', 'bear', 'bunny', 'cat', 'duck'];
+  let currentActiveToyList: string[] = [...ALL_TOY_TYPES];
+
+  function initPrizes(selectedToys: string[] = currentActiveToyList) {
     prizes = [];
+    const validToys = (Array.isArray(selectedToys) && selectedToys.length > 0) ? selectedToys : ALL_TOY_TYPES;
+    currentActiveToyList = validToys;
+
     for(let i=0; i<60; i++) {
       let x = (Math.random()-0.5)*7;
       let z = (Math.random()-0.5)*7;
@@ -57,10 +63,12 @@ async function startServer() {
       const type = types[Math.floor(Math.random() * types.length)];
       const color = colors[Math.floor(Math.random() * colors.length)];
       const value = colorValues[color] * typeMultipliers[type];
+      const toyType = validToys[Math.floor(Math.random() * validToys.length)];
 
       prizes.push({
         id: `prize_${uuidv4()}`,
         type,
+        toyType,
         color,
         value,
         position: [x, Math.random()*4 + 1, z],
@@ -68,15 +76,17 @@ async function startServer() {
       });
     }
     
-    // Add 3 giant golden Shima Enaga (Long-tailed tit) plushies
+    // Add 3 giant golden Shima Enaga (Long-tailed tit) plushies or other variants
     for(let i=0; i<3; i++) {
       let x = (Math.random()-0.5)*7;
       let z = (Math.random()-0.5)*7;
       if (x < -2 && z > 2) x += 3;
       
+      const toyType = validToys[Math.floor(Math.random() * validToys.length)];
       prizes.push({
         id: `prize_giant_${uuidv4()}`,
         type: 'bugdroid',
+        toyType,
         color: '#FBBC04', // Rich Golden Yellow
         value: 100,
         position: [x, Math.random()*2 + 5, z],
@@ -88,15 +98,15 @@ async function startServer() {
 
   let clawState = { x: 0, y: 8, z: 0, state: 'idle', prongsClosed: false, grabbedPrizeId: null };
 
-  function startGame(playerId: string) {
+  function startGame(playerId: string, durationSeconds: number = 60, selectedToys?: string[]) {
     activePlayer = playerId;
-    turnEndTime = Date.now() + 60000; // 1 minute
+    turnEndTime = Date.now() + (durationSeconds * 1000);
     clawState = { x: 0, y: 8, z: 0, state: 'idle', prongsClosed: false, grabbedPrizeId: null };
     if (players[playerId]) {
       players[playerId].currentScore = 0; // Reset current score for new game
       io.emit('players_update', players);
     }
-    initPrizes(); // Reset prizes for the new game
+    initPrizes(selectedToys); // Reset prizes for the new game
     io.emit('prizes_reset', prizes);
     io.emit('turn_start', { activePlayer, turnEndTime, clawState, queue: [] });
   }
@@ -128,20 +138,26 @@ async function startServer() {
         finalName = `P${playerCount}`.slice(0, 3); // Fallback
       }
       
-      players[socket.id] = {
-        id: socket.id,
-        name: finalName,
-        score: 0,
-        currentScore: 0,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      };
+      const existing = players[socket.id];
+      if (existing) {
+        existing.name = finalName;
+      } else {
+        players[socket.id] = {
+          id: socket.id,
+          name: finalName,
+          score: 0,
+          currentScore: 0,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        };
+      }
       io.emit('players_update', players);
     });
 
-    socket.on('join_queue', () => {
+    socket.on('join_queue', (customDuration?: number, selectedToys?: string[]) => {
       if (!players[socket.id]) return;
       if (!activePlayer) {
-        startGame(socket.id);
+        const duration = (typeof customDuration === 'number' && customDuration >= 10 && customDuration <= 300) ? customDuration : 60;
+        startGame(socket.id, duration, selectedToys);
       }
     });
 
