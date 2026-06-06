@@ -207,7 +207,7 @@ export const UI = () => {
       <div className="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-50 text-white font-sans font-black text-xl tracking-wider">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 rounded-full border-4 border-t-transparent border-white animate-spin"></div>
-          <div>進入夾夾樂世界中...</div>
+          <div>進入選物機世界中...</div>
         </div>
       </div>
     );
@@ -224,7 +224,7 @@ export const UI = () => {
           <div className="bg-white/90 backdrop-blur-md shadow-lg rounded-2xl sm:rounded-3xl p-3 sm:p-5 pointer-events-auto w-auto max-w-[155px] xs:max-w-[170px] sm:max-w-none sm:w-80 border border-gray-100 flex flex-col justify-center">
             <div className="flex justify-between items-center gap-2">
               <div>
-                <h1 className="text-sm xs:text-base sm:text-xl font-black text-[#4285F4] tracking-tight leading-tight">夾夾樂</h1>
+                <h1 className="text-sm xs:text-base sm:text-xl font-black text-[#4285F4] tracking-tight leading-tight">選物機</h1>
               </div>
               <div className="text-right shrink-0">
                 <div className="text-[8px] xs:text-[9px] sm:text-[10px] text-gray-400 uppercase tracking-wider mb-0.5 font-bold">
@@ -480,7 +480,7 @@ export const UI = () => {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#4285F4] to-[#34A853] flex items-center justify-center text-xl shadow-inner shadow-white/50 select-none animate-bounce" style={{ animationDuration: '3s' }}>🐦</div>
             <div>
               <h1 className="text-xl font-black text-slate-800 tracking-widest flex items-center gap-2 font-sans">
-                夾夾樂
+                選物機
               </h1>
             </div>
           </div>
