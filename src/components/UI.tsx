@@ -199,7 +199,7 @@ export const UI = () => {
   }, [activePlayer, turnEndTime]);
 
   if (!connected) {
-    return <div className="absolute inset-0 flex items-center justify-center bg-black/80 text-white font-mono">Connecting to Arcade...</div>;
+    return <div className="absolute inset-0 flex items-center justify-center bg-black/80 text-white font-mono z-50">伺服器連線中...</div>;
   }
 
   if (!me) {

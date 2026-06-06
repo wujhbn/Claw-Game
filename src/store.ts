@@ -44,11 +44,35 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   connect: () => {
     if (get().socket) return;
-    const socketUrl = window.location.origin;
-    const socket = io(socketUrl);
+    
+    // Connect to the current domain automatically. Using websocket first prevents some mobile/iframe polling issues.
+    const socket = io("/", {
+      transports: ['websocket', 'polling'], // prefer websocket
+      timeout: 5000,
+    });
+
+    let connectionTimeout = setTimeout(() => {
+      if (!get().connected) {
+         console.warn("Socket connection failed. Switching to offline mode.");
+         // Fallback to offline mode
+         const myId = "local_player";
+         set({ 
+           connected: true, 
+           myId,
+           players: { [myId]: { id: myId, name: 'Offline Player', score: 0, currentScore: 0, color: '#4285F4' } },
+         });
+      }
+    }, 4000);
 
     socket.on('connect', () => {
+      clearTimeout(connectionTimeout);
       set({ connected: true, myId: socket.id });
+    });
+
+    socket.on('connect_error', () => {
+      if (!get().connected) {
+         console.warn("Socket connect_error. Waiting for timeout to switch to offline mode...");
+      }
     });
 
     socket.on('init_state', (state) => {
@@ -117,13 +141,81 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({ socket });
   },
 
-  join: (name) => get().socket?.emit('join', name),
-  joinQueue: (durationSeconds, selectedPlushies) => get().socket?.emit('join_queue', durationSeconds, selectedPlushies),
+  join: (name) => {
+    if (get().socket?.connected) {
+      get().socket?.emit('join', name);
+    } else {
+      const myId = get().myId || 'local_player';
+      set((state) => ({ players: { ...state.players, [myId]: { id: myId, name, score: 0, currentScore: 0, color: '#4285F4' } } }));
+    }
+  },
+  joinQueue: (durationSeconds, selectedPlushies) => {
+    if (get().socket?.connected) {
+      get().socket?.emit('join_queue', durationSeconds, selectedPlushies);
+    } else {
+      // Local offline mode
+      const duration = durationSeconds || 60;
+      const myId = get().myId!;
+      set({ 
+        activePlayer: myId, 
+        turnEndTime: Date.now() + duration * 1000,
+        clawState: { x: 0, y: 8, z: 0, state: 'idle', prongsClosed: false, grabbedPrizeId: null },
+      });
+      // Generate some dummy prizes locally
+      const validToys = selectedPlushies || ['shima_enaga', 'bear', 'bunny', 'cat', 'duck'];
+      const localPrizes = [];
+      const types = ['dodecahedron', 'sphere', 'box'];
+      const colors = ['#FBBC04', '#EA4335', '#34A853', '#E37400', '#9AA0A6'];
+      for(let i=0; i<30; i++) {
+        localPrizes.push({
+          id: `local_prize_${i}`,
+          type: types[Math.floor(Math.random() * types.length)],
+          toyType: validToys[Math.floor(Math.random() * validToys.length)],
+          color: colors[Math.floor(Math.random() * colors.length)],
+          value: 30,
+          scale: 1.0,
+          position: [(Math.random()-0.5)*7, Math.random()*2 + 1, (Math.random()-0.5)*7],
+          rotation: [0,0,0,1]
+        });
+      }
+       set({ prizes: localPrizes });
+
+      // Local game timeout
+      setTimeout(() => {
+         set({ activePlayer: null, gameOver: { winner: get().players[myId], players: [get().players[myId]] } });
+      }, duration * 1000);
+    }
+  },
   updateClaw: (data) => {
     set((state) => ({ clawState: { ...state.clawState, ...data } }));
-    get().socket?.emit('claw_update', data);
+    if (get().socket?.connected) {
+      get().socket?.emit('claw_update', data);
+    }
   },
-  updatePrizes: (data) => get().socket?.emit('prizes_update', data),
-  capturePrize: (prizeId) => get().socket?.emit('prize_captured', prizeId),
+  updatePrizes: (data) => {
+    if (get().socket?.connected) {
+      get().socket?.emit('prizes_update', data);
+    }
+  },
+  capturePrize: (prizeId) => {
+    if (get().socket?.connected) {
+      get().socket?.emit('prize_captured', prizeId);
+    } else { // Offline physics logic
+      const state = get();
+      const prize = state.prizes.find(p => p.id === prizeId);
+      if (prize) {
+        audio.playWinSFX();
+        const myId = state.myId!;
+        const player = state.players[myId];
+        const currentScore = (player.currentScore || 0) + prize.value;
+        const newScore = Math.max(player.score || 0, currentScore);
+        
+        set((s) => ({
+          prizes: s.prizes.filter(p => p.id !== prizeId),
+          players: { ...s.players, [myId]: { ...player, currentScore, score: newScore } }
+        }));
+      }
+    }
+  },
   endTurn: () => get().socket?.emit('turn_end')
 }));
