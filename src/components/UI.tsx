@@ -476,24 +476,24 @@ export const UI = () => {
         {/* Upper Grid Layer */}
         <div className="flex justify-between items-start w-full">
           {/* Main Pilot HUD Plate */}
-          <div className="bg-slate-950/85 backdrop-blur-xl border border-slate-800/80 shadow-[0_4px_30px_rgba(0,0,0,0.5)] rounded-2xl p-4 pointer-events-auto flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#4285F4] to-[#34A853] flex items-center justify-center text-xl shadow-inner shadow-white/20 select-none animate-bounce" style={{ animationDuration: '3s' }}>🐦</div>
+          <div className="bg-white/90 backdrop-blur-xl border border-white/60 shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl p-4 pointer-events-auto flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#4285F4] to-[#34A853] flex items-center justify-center text-xl shadow-inner shadow-white/50 select-none animate-bounce" style={{ animationDuration: '3s' }}>🐦</div>
             <div>
-              <h1 className="text-base font-black text-white tracking-widest flex items-center gap-2 font-sans">
-                夾夾樂 <span className="text-[9px] font-black uppercase tracking-widest bg-[#4285F4]/20 border border-[#4285F4]/30 px-1.5 py-0.5 rounded text-[#4285F4]">Claw Machine v2.4</span>
+              <h1 className="text-base font-black text-slate-800 tracking-widest flex items-center gap-2 font-sans">
+                夾夾樂 <span className="text-[9px] font-black uppercase tracking-widest bg-[#4285F4]/10 border border-[#4285F4]/20 px-1.5 py-0.5 rounded text-[#4285F4]">Claw Machine v2.4</span>
               </h1>
-              <p className="text-[9px] text-gray-400 font-extrabold tracking-widest font-mono">PHYSICS CONSOLE SIMULATION</p>
+              <p className="text-[9px] text-slate-500 font-extrabold tracking-widest font-mono">PHYSICS CONSOLE SIMULATION</p>
             </div>
           </div>
 
           {/* Connected Identity / Live Status Panel */}
-          <div className="bg-slate-950/85 backdrop-blur-xl border border-slate-800/80 shadow-[0_4px_30px_rgba(0,0,0,0.5)] rounded-2xl p-4 pointer-events-auto min-w-[250px] flex justify-between items-center select-none">
+          <div className="bg-white/90 backdrop-blur-xl border border-white/60 shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl p-4 pointer-events-auto min-w-[250px] flex justify-between items-center select-none">
             <div className="pr-4">
-              <span className="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block font-mono">連線狀態 / STATUS</span>
+              <span className="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest block font-mono">連線狀態 / STATUS</span>
               {activePlayer ? (
                 <div className="flex items-center gap-2 mt-1">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-                  <span className="text-xs font-black text-red-400">正在操作：{players[activePlayer]?.name || '---'}</span>
+                  <span className="text-xs font-black text-red-500">正在操作：{players[activePlayer]?.name || '---'}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2 mt-1">
@@ -502,8 +502,8 @@ export const UI = () => {
                 </div>
               )}
             </div>
-            <div className="text-right pl-4 border-l border-slate-800 flex flex-col justify-center min-w-[90px]">
-              <span className="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest block font-mono">
+            <div className="text-right pl-4 border-l border-slate-200 flex flex-col justify-center min-w-[90px]">
+              <span className="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest block font-mono">
                 {isActive ? '本局得分' : '個人高分'}
               </span>
               <span className="text-2xl font-black text-[#3cba54] leading-none mt-0.5 font-mono">
@@ -516,23 +516,23 @@ export const UI = () => {
         {/* Lower Grid Layer: Controller Manuals & spectator badges */}
         <div className="w-full flex justify-between items-end">
           {activePlayer && !isActive && (
-            <div className="bg-slate-950/90 backdrop-blur-md rounded-xl p-3 border border-slate-800 font-bold text-xs text-gray-300 pointer-events-auto flex items-center gap-2.5 shadow-xl">
+            <div className="bg-white/95 backdrop-blur-md rounded-xl p-3 border border-slate-200 font-bold text-xs text-slate-600 pointer-events-auto flex items-center gap-2.5 shadow-xl">
               <div className="w-2.5 h-2.5 rounded-full bg-[#FBBC04] animate-pulse"></div>
-              <span>👀 正在旁觀對手 <strong className="text-amber-400 font-black">{players[activePlayer]?.name || '---'}</strong> 施展抓取特技！</span>
+              <span>👀 正在旁觀對手 <strong className="text-orange-500 font-black">{players[activePlayer]?.name || '---'}</strong> 施展抓取特技！</span>
             </div>
           )}
 
           {!activePlayer && (
-            <div className="bg-slate-950/90 backdrop-blur-md rounded-2xl p-4 border border-slate-800 font-bold text-xs text-gray-400 pointer-events-auto shadow-2xl leading-relaxed max-w-md select-none">
-              <div className="flex items-center gap-1.5 text-xs text-white uppercase font-black tracking-wider mb-1.5">
+            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200 font-bold text-xs text-slate-500 pointer-events-auto shadow-xl leading-relaxed max-w-md select-none">
+              <div className="flex items-center gap-1.5 text-xs text-slate-800 uppercase font-black tracking-wider mb-1.5">
                 <span>🎮</span> 鍵盤快速鍵指示 (KEYBOARD COMPATIBLE)
               </div>
-              <div className="grid grid-cols-2 gap-y-1 text-[11px] text-gray-300 font-semibold font-mono">
-                <div>• 移動爪子： <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">W</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">A</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">S</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">D</kbd></div>
-                <div>• 方向舵控： <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">↑</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">←</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">↓</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm">→</kbd></div>
+              <div className="grid grid-cols-2 gap-y-1 text-[11px] text-slate-500 font-semibold font-mono">
+                <div>• 移動爪子： <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">W</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">A</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">S</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">D</kbd></div>
+                <div>• 方向舵控： <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">↑</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">←</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">↓</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">→</kbd></div>
               </div>
               <div className="mt-2 text-[11px] text-[#4285F4] font-black font-mono">
-                👉 • 拋下鋼爪： <kbd className="px-3.5 py-0.5 bg-slate-800 rounded font-bold border border-slate-700 text-white shadow-sm uppercase">SPACE BAR 空白鍵</kbd>
+                👉 • 拋下鋼爪： <kbd className="px-3.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm uppercase">SPACE BAR 空白鍵</kbd>
               </div>
             </div>
           )}
@@ -543,7 +543,7 @@ export const UI = () => {
       </div>
 
       {/* 2. DOCKED PREMIUM SIDEBAR CONSOLE OVERLAY */}
-      <div className="hidden md:flex sm:landscape:flex absolute right-0 top-0 bottom-0 w-[360px] lg:w-[410px] bg-slate-950/90 border-l border-slate-800/80 shadow-[-10px_0_40px_rgba(0,0,0,0.8)] flex-col justify-between pointer-events-auto text-white p-5 font-sans overflow-hidden select-none z-10 backdrop-blur-lg">
+      <div className="hidden md:flex sm:landscape:flex absolute right-0 top-0 bottom-0 w-[360px] lg:w-[410px] bg-slate-50/95 border-l border-white/60 shadow-[-10px_0_40px_rgba(0,0,0,0.1)] flex-col justify-between pointer-events-auto text-slate-800 p-5 font-sans overflow-hidden select-none z-10 backdrop-blur-lg">
         {/* Terminal Header */}
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-center">
@@ -552,31 +552,31 @@ export const UI = () => {
             </span>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse"></span>
-              <span className="text-[9px] font-black text-gray-400 tracking-wider">HOST RESPONSIVE</span>
+              <span className="text-[9px] font-black text-slate-400 tracking-wider">HOST RESPONSIVE</span>
             </div>
           </div>
 
           {/* Simple User Card */}
-          <div className="bg-slate-900/60 rounded-2xl p-3 border border-slate-850 flex items-center justify-between">
+          <div className="bg-white rounded-2xl p-3 border border-slate-200 shadow-sm flex items-center justify-between">
             <div className="flex items-center gap-2 truncate">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-xs bg-slate-800 text-[#4285F4] border border-slate-700 shrink-0">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-xs bg-blue-50 text-[#4285F4] border border-blue-200 shrink-0">
                 {me.name}
               </div>
               <div className="truncate">
-                <p className="text-[9px] text-gray-400 font-extrabold tracking-wide uppercase leading-none">Your Codename</p>
-                <p className="text-xs font-black text-white mt-0.5 truncate">{me.name} (連線中)</p>
+                <p className="text-[9px] text-slate-500 font-extrabold tracking-wide uppercase leading-none">Your Codename</p>
+                <p className="text-xs font-black text-slate-800 mt-0.5 truncate">{me.name} (連線中)</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-[9px] text-gray-400 font-extrabold tracking-wide uppercase leading-none">Global Ranking</p>
-              <p className="text-xs font-bold text-amber-400 mt-0.5">
+              <p className="text-[9px] text-slate-500 font-extrabold tracking-wide uppercase leading-none">Global Ranking</p>
+              <p className="text-xs font-bold text-orange-500 mt-0.5">
                 #{Object.values(players).sort((a: any, b: any) => b.score - a.score).findIndex(p => p.id === myId) + 1} / {Object.keys(players).length}名
               </p>
             </div>
           </div>
 
           {/* Quick tab controllers */}
-          <div className="grid grid-cols-4 gap-1 p-1 bg-slate-900 rounded-xl border border-slate-850">
+          <div className="grid grid-cols-4 gap-1 p-1 bg-slate-200/50 rounded-xl border border-slate-200">
             {[
               { id: 'play', label: '大廳', icon: Play },
               { id: 'leaderboard', label: '排行', icon: Trophy },
@@ -592,7 +592,7 @@ export const UI = () => {
                     audio.playClickSFX();
                     setActiveTab(tab.id as any);
                   }}
-                  className={`py-2 rounded-lg text-xs font-black flex flex-col items-center gap-1 transition-all cursor-pointer ${isSelected ? 'bg-slate-800 text-white shadow-md border border-slate-700' : 'text-gray-400 hover:text-gray-200'}`}
+                  className={`py-2 rounded-lg text-xs font-black flex flex-col items-center gap-1 transition-all cursor-pointer ${isSelected ? 'bg-white text-slate-800 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-800'}`}
                 >
                   <Icon size={14} className={isSelected ? 'text-[#4285F4]' : ''} />
                   <span className="text-[9px]">{tab.label}</span>
@@ -610,21 +610,21 @@ export const UI = () => {
             <div className="flex flex-col flex-1 justify-center gap-4 w-full h-full">
               {activePlayer ? (
                 /* Active Mode HUD inside sidebar */
-                <div className="flex flex-col items-center bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex-1 justify-center gap-3">
-                  <div className="text-[9px] text-red-400 font-black tracking-widest uppercase animate-pulse">⏰ GAME COUNTDOWN TIME</div>
+                <div className="flex flex-col items-center bg-white border border-slate-200 shadow-sm rounded-2xl p-4 flex-1 justify-center gap-3">
+                  <div className="text-[9px] text-red-500 font-black tracking-widest uppercase animate-pulse">⏰ GAME COUNTDOWN TIME</div>
                   
                   {/* Countdown Progress */}
-                  <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-700 mt-1">
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200 mt-1">
                     <div 
                       className="bg-gradient-to-r from-red-500 via-amber-500 to-[#34A853] h-full transition-all" 
                       style={{ width: `${Math.min(100, (timeLeft / gameDuration) * 100)}%` }}
                     />
                   </div>
                   
-                  <div className="text-4xl font-extrabold text-white font-mono tracking-wider">{timeLeft} <span className="text-xs font-bold text-gray-400">SECONDS LEFT</span></div>
+                  <div className="text-4xl font-extrabold text-slate-800 font-mono tracking-wider">{timeLeft} <span className="text-xs font-bold text-slate-400">SECONDS LEFT</span></div>
 
                   {/* Interactive Status message */}
-                  <div className="space-y-1 text-center font-bold text-[10px] text-slate-400 mt-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/60 leading-normal">
+                  <div className="space-y-1 text-center font-bold text-[10px] text-slate-500 mt-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200 leading-normal">
                     <p>🕹️ • 抓取階段：使用下方虛擬控制器控盤，</p>
                     <p className="mt-1">或者在鍵盤上進行靈活操作！</p>
                   </div>
@@ -632,12 +632,12 @@ export const UI = () => {
               ) : (
                 /* Idle Play/Coin-Op Trigger Room */
                 <div className="flex flex-col flex-1 justify-center items-center p-3 text-center gap-4">
-                  <div className="w-14 h-14 bg-slate-900/80 rounded-2xl border border-slate-800 flex items-center justify-center text-3xl shadow-inner shadow-white/5 animate-pulse">
+                  <div className="w-14 h-14 bg-white rounded-2xl border border-slate-200 flex items-center justify-center text-3xl shadow-sm animate-pulse">
                     🪙
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-white">投幣啟動夾娃娃機</h3>
-                    <p className="text-xs text-gray-400 mt-1 max-w-[280px] leading-relaxed">挑戰時間預設為 60 秒，你可以任意自訂秒數。快來大顯身手夾取超萌長尾山雀！</p>
+                    <h3 className="text-base font-black text-slate-800">投幣啟動夾娃娃機</h3>
+                    <p className="text-xs text-slate-500 mt-1 max-w-[280px] leading-relaxed">挑戰時間預設為 60 秒，你可以任意自訂秒數。快來大顯身手夾取超萌長尾山雀！</p>
                   </div>
 
                   {/* Quick seconds picker inside Sidebar */}
@@ -648,7 +648,7 @@ export const UI = () => {
                         <button
                           key={secs}
                           onClick={() => handleChangeDuration(secs)}
-                          className={`py-2 rounded-xl text-xs font-black border cursor-pointer transition-all ${gameDuration === secs ? 'bg-[#4285F4] border-[#4285F4] text-white' : 'bg-slate-900 border-slate-800 hover:bg-slate-850 text-gray-300'}`}
+                          className={`py-2 rounded-xl text-xs font-black border cursor-pointer transition-all ${gameDuration === secs ? 'bg-[#4285F4] border-[#4285F4] text-white shadow-md' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-600'}`}
                         >
                           {secs}秒
                         </button>
@@ -760,32 +760,32 @@ export const UI = () => {
           {/* D. Settings Tab View */}
           {activeTab === 'settings' && (
             <div className="space-y-4 w-full text-left">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-2">⚙️ 主機控制與音效 (MODULE CONFIG)</span>
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">⚙️ 主機控制與音效 (MODULE CONFIG)</span>
               
               <div className="space-y-2.5">
                 {/* BGM Selector */}
-                <div className="flex justify-between items-center bg-slate-900/50 p-3 rounded-2xl border border-slate-850">
+                <div className="flex justify-between items-center bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-center gap-2">
-                    {bgmOn ? <Volume2 size={16} className="text-[#4285F4]" /> : <VolumeX size={16} className="text-gray-500" />}
-                    <span className="text-xs font-semibold text-gray-300">背景音樂 (BGM)</span>
+                    {bgmOn ? <Volume2 size={16} className="text-[#4285F4]" /> : <VolumeX size={16} className="text-slate-400" />}
+                    <span className="text-xs font-semibold text-slate-700">背景音樂 (BGM)</span>
                   </div>
                   <button
                     onClick={handleToggleBgm}
-                    className={`w-10 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-all ${bgmOn ? 'bg-[#34A853]' : 'bg-slate-700'}`}
+                    className={`w-10 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-all ${bgmOn ? 'bg-[#34A853]' : 'bg-slate-300'}`}
                   >
                     <div className={`bg-white w-4 h-4 rounded-full shadow transform transition-all ${bgmOn ? 'translate-x-5' : 'translate-x-0'}`} />
                   </button>
                 </div>
 
                 {/* SFX Selector */}
-                <div className="flex justify-between items-center bg-slate-900/50 p-3 rounded-2xl border border-slate-850">
+                <div className="flex justify-between items-center bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-center gap-2">
-                    {sfxOn ? <Volume2 size={16} className="text-[#4285F4]" /> : <VolumeX size={16} className="text-gray-500" />}
-                    <span className="text-xs font-semibold text-gray-300">遊戲音效 (SFX)</span>
+                    {sfxOn ? <Volume2 size={16} className="text-[#4285F4]" /> : <VolumeX size={16} className="text-slate-400" />}
+                    <span className="text-xs font-semibold text-slate-700">遊戲音效 (SFX)</span>
                   </div>
                   <button
                     onClick={handleToggleSfx}
-                    className={`w-10 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-all ${sfxOn ? 'bg-[#34A853]' : 'bg-slate-700'}`}
+                    className={`w-10 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-all ${sfxOn ? 'bg-[#34A853]' : 'bg-slate-300'}`}
                   >
                     <div className={`bg-white w-4 h-4 rounded-full shadow transform transition-all ${sfxOn ? 'translate-x-5' : 'translate-x-0'}`} />
                   </button>
@@ -794,28 +794,28 @@ export const UI = () => {
 
               {/* Plushie Customizer selector inside the side settings view! */}
               <div className="space-y-2">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mt-2">🧸 自訂娃娃種類 (PLUSHIE CHOICE)</span>
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mt-2">🧸 自訂娃娃種類 (PLUSHIE CHOICE)</span>
                 <div className="space-y-1.5 max-h-[160px] overflow-y-auto pr-0.5 custom-scrollbar">
                   {PLUSHIE_TYPES.map((toy) => {
                     const isChecked = selectedPlushies.includes(toy.id);
                     return (
-                      <div key={toy.id} className="flex justify-between items-center bg-slate-900/40 p-2 rounded-xl border border-slate-850">
+                      <div key={toy.id} className="flex justify-between items-center bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
                         <div className="flex items-center gap-2">
                           <span className="text-base">{toy.emoji}</span>
-                          <span className="text-xs font-bold text-gray-300">{toy.name}</span>
+                          <span className="text-xs font-bold text-slate-700">{toy.name}</span>
                         </div>
                         <div className="flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={() => handleTogglePlushie(toy.id, true)}
-                            className={`px-2 py-0.5 rounded text-[9px] font-black tracking-wide border transition-all ${isChecked && selectedPlushies.length === 1 && selectedPlushies[0] === toy.id ? 'bg-[#4285F4]/20 border-[#4285F4]/40 text-[#4285F4]' : 'bg-slate-950 border-slate-800 text-gray-400 cursor-pointer hover:bg-slate-800'}`}
+                            className={`px-2 py-0.5 rounded text-[9px] font-black tracking-wide border transition-all ${isChecked && selectedPlushies.length === 1 && selectedPlushies[0] === toy.id ? 'bg-[#4285F4]/10 border-[#4285F4]/30 text-[#4285F4]' : 'bg-slate-50 border-slate-200 text-slate-500 cursor-pointer hover:bg-slate-100'}`}
                           >
                             單選
                           </button>
                           <button
                             type="button"
                             onClick={() => handleTogglePlushie(toy.id, false)}
-                            className={`w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer ${isChecked ? 'bg-[#34A853] text-white border-[#34A853]' : 'bg-slate-950 text-transparent border-slate-800 hover:border-slate-700'}`}
+                            className={`w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer ${isChecked ? 'bg-[#34A853] text-white border-[#34A853]' : 'bg-slate-50 text-transparent border-slate-200 hover:border-slate-300'}`}
                           >
                             {isChecked ? <Check size={12} className="stroke-[3]" /> : ''}
                           </button>
@@ -830,7 +830,7 @@ export const UI = () => {
         </div>
 
         {/* Sidebar Arcade Deck Footer Controls */}
-        <div className="border-t border-slate-800/80 pt-4 flex flex-col gap-3">
+        <div className="border-t border-slate-200/80 pt-4 flex flex-col gap-3">
           {isActive ? (
             <div className="flex flex-col gap-3">
               <span className="text-[9px] text-slate-400 font-bold uppercase tracking-widest text-center block font-mono">TACTILE CONTROLLER INTEGRATION</span>
@@ -845,10 +845,10 @@ export const UI = () => {
                     onMouseLeave={() => handleEndMove('w')}
                     onTouchStart={(e) => { e.preventDefault(); handleStartMove('w'); }}
                     onTouchEnd={(e) => { e.preventDefault(); handleEndMove('w'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.w ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-slate-900 text-gray-300 border-slate-800 hover:bg-slate-850'}`}
+                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.w ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 shadow-sm'}`}
                   >
                     <ArrowUp size={16} />
-                    <span className="text-[7px] font-black text-gray-500 font-mono">W / UP</span>
+                    <span className="text-[7px] font-black text-slate-500 font-mono">W / UP</span>
                   </button>
                   <div />
 
@@ -858,22 +858,22 @@ export const UI = () => {
                     onMouseLeave={() => handleEndMove('a')}
                     onTouchStart={(e) => { e.preventDefault(); handleStartMove('a'); }}
                     onTouchEnd={(e) => { e.preventDefault(); handleEndMove('a'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.a ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-slate-900 text-gray-300 border-slate-800 hover:bg-slate-850'}`}
+                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.a ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 shadow-sm'}`}
                   >
                     <ArrowLeft size={16} />
-                    <span className="text-[7px] font-black text-gray-500 font-mono">A / L</span>
+                    <span className="text-[7px] font-black text-slate-500 font-mono">A / L</span>
                   </button>
-                  <div className="rounded-xl bg-slate-950 flex items-center justify-center text-sm border border-slate-850 select-none">🕹️</div>
+                  <div className="rounded-xl bg-slate-50 flex items-center justify-center text-sm border border-slate-200 select-none shadow-inner">🕹️</div>
                   <button
                     onMouseDown={() => handleStartMove('d')}
                     onMouseUp={() => handleEndMove('d')}
                     onMouseLeave={() => handleEndMove('d')}
                     onTouchStart={(e) => { e.preventDefault(); handleStartMove('d'); }}
                     onTouchEnd={(e) => { e.preventDefault(); handleEndMove('d'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.d ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-slate-900 text-gray-300 border-slate-800 hover:bg-slate-850'}`}
+                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.d ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 shadow-sm'}`}
                   >
                     <ArrowRight size={16} />
-                    <span className="text-[7px] font-black text-gray-500 font-mono">D / R</span>
+                    <span className="text-[7px] font-black text-slate-500 font-mono">D / R</span>
                   </button>
 
                   <div />
@@ -883,10 +883,10 @@ export const UI = () => {
                     onMouseLeave={() => handleEndMove('s')}
                     onTouchStart={(e) => { e.preventDefault(); handleStartMove('s'); }}
                     onTouchEnd={(e) => { e.preventDefault(); handleEndMove('s'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.s ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-slate-900 text-gray-300 border-slate-800 hover:bg-slate-850'}`}
+                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.s ? 'bg-[#4285F4] text-white border-[#4285F4] scale-95 shadow-[0_0_12px_rgba(66,133,244,0.4)]' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 shadow-sm'}`}
                   >
                     <ArrowDown size={16} />
-                    <span className="text-[7px] font-black text-gray-500 font-mono">S / DN</span>
+                    <span className="text-[7px] font-black text-slate-500 font-mono">S / DN</span>
                   </button>
                   <div />
                 </div>
@@ -905,7 +905,7 @@ export const UI = () => {
             </div>
           ) : (
             /* Spectator details footer */
-            <div className="bg-slate-900/30 p-3 rounded-xl border border-slate-850/50 flex justify-between items-center text-[10px] text-gray-400 font-mono select-none">
+            <div className="bg-slate-100/50 p-3 rounded-xl border border-slate-200/80 flex justify-between items-center text-[10px] text-slate-500 font-mono select-none shadow-sm">
               <span>🖥️ 鍵盤控制已綁定，隨時適用</span>
               <span>SYSTEM: ONLINE (v2.4)</span>
             </div>
