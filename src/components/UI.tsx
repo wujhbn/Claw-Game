@@ -479,38 +479,13 @@ export const UI = () => {
           <div className="bg-white/90 backdrop-blur-xl border border-white/60 shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl p-4 pointer-events-auto flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#4285F4] to-[#34A853] flex items-center justify-center text-xl shadow-inner shadow-white/50 select-none animate-bounce" style={{ animationDuration: '3s' }}>🐦</div>
             <div>
-              <h1 className="text-base font-black text-slate-800 tracking-widest flex items-center gap-2 font-sans">
-                夾夾樂 <span className="text-[9px] font-black uppercase tracking-widest bg-[#4285F4]/10 border border-[#4285F4]/20 px-1.5 py-0.5 rounded text-[#4285F4]">Claw Machine v2.4</span>
+              <h1 className="text-xl font-black text-slate-800 tracking-widest flex items-center gap-2 font-sans">
+                夾夾樂
               </h1>
-              <p className="text-[9px] text-slate-500 font-extrabold tracking-widest font-mono">PHYSICS CONSOLE SIMULATION</p>
             </div>
           </div>
 
-          {/* Connected Identity / Live Status Panel */}
-          <div className="bg-white/90 backdrop-blur-xl border border-white/60 shadow-[0_4px_30px_rgba(0,0,0,0.1)] rounded-2xl p-4 pointer-events-auto min-w-[250px] flex justify-between items-center select-none">
-            <div className="pr-4">
-              <span className="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest block font-mono">連線狀態 / STATUS</span>
-              {activePlayer ? (
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-                  <span className="text-xs font-black text-red-500">正在操作：{players[activePlayer]?.name || '---'}</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#34A853] animate-pulse" />
-                  <span className="text-xs font-black text-[#34A853]">機台待命中 (Idle Room)</span>
-                </div>
-              )}
-            </div>
-            <div className="text-right pl-4 border-l border-slate-200 flex flex-col justify-center min-w-[90px]">
-              <span className="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest block font-mono">
-                {isActive ? '本局得分' : '個人高分'}
-              </span>
-              <span className="text-2xl font-black text-[#3cba54] leading-none mt-0.5 font-mono">
-                {isActive ? (me.currentScore || 0) : me.score}
-              </span>
-            </div>
-          </div>
+
         </div>
 
         {/* Lower Grid Layer: Controller Manuals & spectator badges */}
@@ -522,21 +497,6 @@ export const UI = () => {
             </div>
           )}
 
-          {!activePlayer && (
-            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-slate-200 font-bold text-xs text-slate-500 pointer-events-auto shadow-xl leading-relaxed max-w-md select-none">
-              <div className="flex items-center gap-1.5 text-xs text-slate-800 uppercase font-black tracking-wider mb-1.5">
-                <span>🎮</span> 鍵盤快速鍵指示 (KEYBOARD COMPATIBLE)
-              </div>
-              <div className="grid grid-cols-2 gap-y-1 text-[11px] text-slate-500 font-semibold font-mono">
-                <div>• 移動爪子： <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">W</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">A</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">S</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">D</kbd></div>
-                <div>• 方向舵控： <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">↑</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">←</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">↓</kbd> <kbd className="px-1.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm">→</kbd></div>
-              </div>
-              <div className="mt-2 text-[11px] text-[#4285F4] font-black font-mono">
-                👉 • 拋下鋼爪： <kbd className="px-3.5 py-0.5 bg-slate-100 rounded font-bold border border-slate-300 text-slate-700 shadow-sm uppercase">SPACE BAR 空白鍵</kbd>
-              </div>
-            </div>
-          )}
-          
           {/* Buffer alignment child */}
           <div></div>
         </div>
@@ -547,30 +507,30 @@ export const UI = () => {
         {/* Terminal Header */}
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-center">
-            <span className="text-[10px] font-black text-[#4285F4] uppercase tracking-widest bg-[#4285F4]/10 px-2 py-0.75 rounded-full border border-[#4285F4]/20">
-              Arcade Terminal
+            <span className="text-[12px] font-black text-[#4285F4] tracking-widest bg-[#4285F4]/10 px-2.5 py-1 rounded-full border border-[#4285F4]/20">
+              遊戲控制台
             </span>
             <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#34A853] animate-pulse"></span>
-              <span className="text-[9px] font-black text-slate-400 tracking-wider">HOST RESPONSIVE</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-[#34A853] animate-pulse"></span>
+              <span className="text-[10px] font-black text-slate-400 tracking-wider">主機已連線</span>
             </div>
           </div>
 
           {/* Simple User Card */}
           <div className="bg-white rounded-2xl p-3 border border-slate-200 shadow-sm flex items-center justify-between">
-            <div className="flex items-center gap-2 truncate">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-xs bg-blue-50 text-[#4285F4] border border-blue-200 shrink-0">
-                {me.name}
+            <div className="flex items-center gap-3 truncate">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-lg bg-blue-50 text-[#4285F4] border border-blue-200 shrink-0 uppercase">
+                {me.name.charAt(0)}
               </div>
               <div className="truncate">
-                <p className="text-[9px] text-slate-500 font-extrabold tracking-wide uppercase leading-none">Your Codename</p>
-                <p className="text-xs font-black text-slate-800 mt-0.5 truncate">{me.name} (連線中)</p>
+                <p className="text-[10px] text-slate-500 font-extrabold tracking-wide">玩家名稱</p>
+                <p className="text-sm font-black text-slate-800 truncate mt-0.5">{me.name}</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-[9px] text-slate-500 font-extrabold tracking-wide uppercase leading-none">Global Ranking</p>
-              <p className="text-xs font-bold text-orange-500 mt-0.5">
-                #{Object.values(players).sort((a: any, b: any) => b.score - a.score).findIndex(p => p.id === myId) + 1} / {Object.keys(players).length}名
+              <p className="text-[10px] text-slate-500 font-extrabold tracking-wide">當前排名</p>
+              <p className="text-sm font-bold text-orange-500 mt-0.5">
+                #{Object.values(players).sort((a: any, b: any) => b.score - a.score).findIndex(p => p.id === myId) + 1} / {Object.keys(players).length}
               </p>
             </div>
           </div>
@@ -592,10 +552,9 @@ export const UI = () => {
                     audio.playClickSFX();
                     setActiveTab(tab.id as any);
                   }}
-                  className={`py-2 rounded-lg text-xs font-black flex flex-col items-center gap-1 transition-all cursor-pointer ${isSelected ? 'bg-white text-slate-800 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-800'}`}
+                  className={`py-3 rounded-lg text-xs font-black flex flex-col items-center gap-1 transition-all cursor-pointer ${isSelected ? 'bg-white text-slate-800 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-800'}`}
                 >
-                  <Icon size={14} className={isSelected ? 'text-[#4285F4]' : ''} />
-                  <span className="text-[9px]">{tab.label}</span>
+                  <Icon size={18} className={isSelected ? 'text-[#4285F4]' : ''} />
                 </button>
               );
             })}
@@ -636,13 +595,12 @@ export const UI = () => {
                     🪙
                   </div>
                   <div>
-                    <h3 className="text-base font-black text-slate-800">投幣啟動夾娃娃機</h3>
-                    <p className="text-xs text-slate-500 mt-1 max-w-[280px] leading-relaxed">挑戰時間預設為 60 秒，你可以任意自訂秒數。快來大顯身手夾取超萌長尾山雀！</p>
+                    <h3 className="text-lg font-black text-slate-800">準備開始</h3>
                   </div>
 
                   {/* Quick seconds picker inside Sidebar */}
                   <div className="w-full space-y-2 text-left mt-1">
-                    <span className="text-[9px] text-[#4285F4] font-black uppercase tracking-widest pl-1 block">⏱️ 自訂單局挑戰秒數</span>
+                    <span className="text-[10px] text-[#4285F4] font-black uppercase tracking-widest pl-1 block">⏱️ 遊戲時間</span>
                     <div className="grid grid-cols-4 gap-1.5">
                       {[30, 60, 90, 120].map((secs) => (
                         <button
@@ -658,9 +616,9 @@ export const UI = () => {
 
                   <button
                     onClick={() => { audio.playClickSFX(); joinQueue(gameDuration, selectedPlushies); }}
-                    className="w-full bg-[#34A853] hover:bg-[#2c8d45] text-white font-mono font-black py-4 rounded-2xl shadow-lg shadow-[#34A853]/15 transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm cursor-pointer border-t border-white/10 pointer-events-auto"
+                    className="w-full bg-[#34A853] hover:bg-[#2c8d45] text-white font-mono font-black py-4 rounded-2xl shadow-lg shadow-[#34A853]/15 transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-sm cursor-pointer border-t border-white/10 pointer-events-auto mt-2"
                   >
-                    <Play size={16} fill="currentColor" /> COIN-START / 投入金幣開始
+                    <Play size={16} fill="currentColor" /> 開始遊戲
                   </button>
                 </div>
               )}

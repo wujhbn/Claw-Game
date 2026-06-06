@@ -274,60 +274,6 @@ export const ClawMachine = () => {
           <boxGeometry args={[7.5, 0.3, 7.5]} />
           <meshStandardMaterial color="#FF9800" metalness={0.1} roughness={0.7} />
         </mesh>
-
-        {/* ======================================================== */}
-        {/* ROOF TOP 3D SCULPTURED ANIMALS AND ADORABLE DETAILS */}
-        {/* ======================================================== */}
-        
-        {/* Cute Rounded Bear Ears standing proud on top front edge */}
-        {/* Left Bear Ear */}
-        <mesh position={[-3.6, 11.4, 4.4]} rotation={[Math.PI / 2, 0, -Math.PI / 8]} receiveShadow castShadow>
-          <cylinderGeometry args={[1.3, 1.3, 0.35, 32]} />
-          <meshStandardMaterial color="#FCFAF6" roughness={0.75} />
-        </mesh>
-        <mesh position={[-3.6, 11.4, 4.6]} rotation={[Math.PI / 2, 0, -Math.PI / 8]} receiveShadow castShadow>
-          <cylinderGeometry args={[0.85, 0.85, 0.1, 32]} />
-          <meshStandardMaterial color="#FFCCD1" roughness={0.7} />
-        </mesh>
-
-        {/* Right Bear Ear */}
-        <mesh position={[3.6, 11.4, 4.4]} rotation={[Math.PI / 2, 0, Math.PI / 8]} receiveShadow castShadow>
-          <cylinderGeometry args={[1.3, 1.3, 0.35, 32]} />
-          <meshStandardMaterial color="#FCFAF6" roughness={0.75} />
-        </mesh>
-        <mesh position={[3.6, 11.4, 4.6]} rotation={[Math.PI / 2, 0, Math.PI / 8]} receiveShadow castShadow>
-          <cylinderGeometry args={[0.85, 0.85, 0.1, 32]} />
-          <meshStandardMaterial color="#FFCCD1" roughness={0.7} />
-        </mesh>
-
-        {/* Adorable white companion mascot bird sitting on the front center of canopy */}
-        <mesh position={[0, 11.3, 4.2]} receiveShadow castShadow>
-          <sphereGeometry args={[1.1, 32, 32]} />
-          <meshStandardMaterial color="#FFFFFF" roughness={0.85} />
-        </mesh>
-        {/* Little Mascot beak */}
-        <mesh position={[0, 11.2, 5.25]} rotation={[Math.PI / 2, 0, 0]} receiveShadow>
-          <coneGeometry args={[0.13, 0.38, 4]} />
-          <meshStandardMaterial color="#FFA000" />
-        </mesh>
-        {/* Little Mascot Eyes */}
-        <mesh position={[-0.32, 11.35, 5.18]} receiveShadow>
-          <sphereGeometry args={[0.1, 16, 16]} />
-          <meshStandardMaterial color="#2E1C0C" />
-        </mesh>
-        <mesh position={[0.32, 11.35, 5.18]} receiveShadow>
-          <sphereGeometry args={[0.1, 16, 16]} />
-          <meshStandardMaterial color="#2E1C0C" />
-        </mesh>
-        {/* Little Mascot rosy cheeks */}
-        <mesh position={[-0.55, 11.15, 5.14]} receiveShadow>
-          <sphereGeometry args={[0.18, 16, 16]} />
-          <meshStandardMaterial color="#FFA3AC" />
-        </mesh>
-        <mesh position={[0.55, 11.15, 5.14]} receiveShadow>
-          <sphereGeometry args={[0.18, 16, 16]} />
-          <meshStandardMaterial color="#FFA3AC" />
-        </mesh>
       </RigidBody>
 
       {/* Pillars - Vibrant Orange & Honey Columns */}
