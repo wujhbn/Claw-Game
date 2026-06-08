@@ -12,7 +12,7 @@ class AudioEngine {
   private moveGain: GainNode | null = null;
 
   // Settings stored in local storage
-  public bgmEnabled: boolean = true;
+  public bgmEnabled: boolean = false;
   public sfxEnabled: boolean = true;
 
   constructor() {
