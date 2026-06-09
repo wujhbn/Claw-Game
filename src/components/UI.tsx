@@ -488,14 +488,30 @@ export const UI = () => {
       <div className="hidden md:flex sm:landscape:flex absolute left-6 top-6 bottom-6 right-[380px] lg:right-[430px] pointer-events-none flex-col justify-between z-10">
         {/* Upper Grid Layer */}
         <div className="flex justify-between items-start w-full">
-          {/* Main Pilot HUD Plate */}
-          <div className="bg-[#FFFDF6]/95 backdrop-blur-xl border-4 border-[#FFA6B9] shadow-lg rounded-[24px] p-4 pointer-events-auto flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#FFE5A3] flex items-center justify-center text-xl shadow-inner select-none animate-bounce" style={{ animationDuration: '2.5s' }}>🐤</div>
-            <div>
-              <h1 className="text-xl font-black text-rose-600 tracking-wider flex items-center gap-2 font-sans">
+          {/* Main Pilot HUD Plate with Score & Timer */}
+          <div className="flex gap-4">
+            <div className="bg-[#FFFDF6]/95 backdrop-blur-xl border-4 border-[#FFA6B9] shadow-lg rounded-[24px] px-5 py-3 pointer-events-auto flex items-center gap-4">
+              <div className="text-xl font-black text-rose-600 tracking-wider flex items-center gap-2 font-sans">
                 🌸 快樂選物機
-              </h1>
+              </div>
+              <div className="h-8 w-px bg-rose-200"></div>
+              <div className="flex flex-col items-end">
+                <span className="text-[10px] text-[#FF8A9A] font-extrabold leading-none uppercase">
+                  {isActive ? "當前分數" : "最高紀錄"}
+                </span>
+                <span className="font-black text-[#FF5D8F] text-[22px] leading-tight">
+                  {isActive ? (me.currentScore || 0) : me.score}
+                </span>
+              </div>
             </div>
+            
+            {/* Time Left Badge (Only when active) */}
+            {activePlayer && isActive && (
+              <div className="bg-[#FFFDF6]/95 backdrop-blur-xl border-4 border-[#FFA6B9] shadow-lg rounded-[24px] px-5 py-3 pointer-events-auto flex items-center gap-2 font-sans font-black text-[#FF5D8F] text-lg">
+                <Clock size={20} className="text-[#FF5D8F] animate-spin" style={{ animationDuration: '6s' }} />
+                <span>{timeLeft} 秒</span>
+              </div>
+            )}
           </div>
         </div>
 
