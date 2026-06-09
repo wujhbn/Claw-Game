@@ -53,7 +53,8 @@ async function startServer() {
     const validToys = (Array.isArray(selectedToys) && selectedToys.length > 0) ? selectedToys : ALL_TOY_TYPES;
     currentActiveToyList = validToys;
 
-    for(let i=0; i<60; i++) {
+    const totalPrizes = Math.floor(Math.random() * 40) + 20; // Random amount between 20 and 59
+    for(let i=0; i<totalPrizes; i++) {
       let x = (Math.random()-0.5)*7;
       let z = (Math.random()-0.5)*7;
       // Avoid chute area (x: -5 to -2, z: 2 to 5)
@@ -65,8 +66,8 @@ async function startServer() {
       const color = colors[Math.floor(Math.random() * colors.length)];
       const toyType = validToys[Math.floor(Math.random() * validToys.length)];
       
-      const sizes = [0.6, 0.8, 1.0, 1.0, 1.2, 1.5];
-      const scale = sizes[Math.floor(Math.random() * sizes.length)];
+      // Much more varied sizes
+      const scale = 0.5 + Math.random() * 1.5; // From 0.5 to 2.0
       const value = Math.floor(colorValues[color] * typeMultipliers[type] * scale);
 
       prizes.push({

@@ -166,14 +166,16 @@ export const useGameStore = create<GameState>((set, get) => ({
       const localPrizes = [];
       const types = ['dodecahedron', 'sphere', 'box'];
       const colors = ['#FBBC04', '#EA4335', '#34A853', '#E37400', '#9AA0A6'];
-      for(let i=0; i<30; i++) {
+      const totalPrizes = Math.floor(Math.random() * 40) + 20; // 20 to 59
+      for(let i=0; i<totalPrizes; i++) {
+        const scale = 0.5 + Math.random() * 1.5;
         localPrizes.push({
           id: `local_prize_${i}`,
           type: types[Math.floor(Math.random() * types.length)],
           toyType: validToys[Math.floor(Math.random() * validToys.length)],
           color: colors[Math.floor(Math.random() * colors.length)],
-          value: 30,
-          scale: 1.0,
+          value: Math.floor(30 * scale),
+          scale: scale,
           position: [(Math.random()-0.5)*7, Math.random()*2 + 1, (Math.random()-0.5)*7],
           rotation: [0,0,0,1]
         });
