@@ -24,7 +24,7 @@ interface GameState {
   joinQueue: (durationSeconds?: number, selectedPlushies?: string[]) => void;
   updateClaw: (data: any) => void;
   updatePrizes: (data: any) => void;
-  capturePrize: (prizeId: string) => void;
+  capturePrize: (prizeId: string, isValidWin?: boolean) => void;
   endTurn: () => void;
 }
 
@@ -199,18 +199,18 @@ export const useGameStore = create<GameState>((set, get) => ({
       get().socket?.emit('prizes_update', data);
     }
   },
-  capturePrize: (prizeId) => {
+  capturePrize: (prizeId, isValidWin = true) => {
     if (get().socket?.connected) {
-      get().socket?.emit('prize_captured', prizeId);
+      get().socket?.emit('prize_captured', prizeId, isValidWin);
     } else { // Offline physics logic
       const state = get();
       const prize = state.prizes.find(p => p.id === prizeId);
       if (prize) {
-        audio.playWinSFX();
+        if (isValidWin) audio.playWinSFX();
         const myId = state.myId!;
         const player = state.players[myId];
-        const currentScore = (player.currentScore || 0) + prize.value;
-        const newScore = Math.max(player.score || 0, currentScore);
+        const currentScore = isValidWin ? (player.currentScore || 0) + prize.value : (player.currentScore || 0);
+        const newScore = isValidWin ? Math.max(player.score || 0, currentScore) : player.score;
         
         set((s) => ({
           prizes: s.prizes.filter(p => p.id !== prizeId),

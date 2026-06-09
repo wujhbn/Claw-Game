@@ -175,7 +175,7 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
         
         if (!ls.grabbedPrizeId) {
           let closestPrize = null;
-          let minDistance = 1.0; // Snap radius - reduced to simulate loose grip
+          let minDistance = 2.0; // Increased grab radius to make it easier
           
           useGameStore.getState().prizes.forEach(p => {
             const dx = p.position[0] - ls.x;
@@ -189,12 +189,10 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
           });
           
           if (closestPrize) {
-            // 20% chance to fail to grab even if perfectly aligned
-            if (Math.random() > 0.2) {
-              ls.grabbedPrizeId = closestPrize.id;
-              updateClaw({ grabbedPrizeId: closestPrize.id });
-              audio.playGrabSFX();
-            }
+            // 0% chance to fail to grab to make it easier
+            ls.grabbedPrizeId = closestPrize.id;
+            updateClaw({ grabbedPrizeId: closestPrize.id });
+            audio.playGrabSFX();
           }
         }
 
@@ -207,11 +205,7 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
       else if (ls.state === 'raising') {
         ls.y += 4 * delta;
 
-        // Simulate loose grip (chance to drop while raising)
-        if (ls.grabbedPrizeId && Math.random() < 0.015 * (60 * delta)) {
-           ls.grabbedPrizeId = null;
-           updateClaw({ grabbedPrizeId: null });
-        }
+        // Removed random drop mechanic to make gameplay easier
 
         if (ls.y >= 8) {
           ls.y = 8;
@@ -223,11 +217,7 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
         ls.x = THREE.MathUtils.lerp(ls.x, -3.5, 3 * delta);
         ls.z = THREE.MathUtils.lerp(ls.z, 3.5, 3 * delta);
 
-        // Simulate loose grip (chance to drop while returning)
-        if (ls.grabbedPrizeId && Math.random() < 0.01 * (60 * delta)) {
-           ls.grabbedPrizeId = null;
-           updateClaw({ grabbedPrizeId: null });
-        }
+        // Removed random drop mechanic to make gameplay easier
 
         if (Math.abs(ls.x - -3.5) < 0.1 && Math.abs(ls.z - 3.5) < 0.1) {
           ls.state = 'opening';

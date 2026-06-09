@@ -189,7 +189,7 @@ async function startServer() {
       }
     });
 
-    socket.on('prize_captured', (prizeId) => {
+    socket.on('prize_captured', (prizeId, isValidWin = true) => {
       const playerIds = Object.keys(players);
       const isPhysicsHost = socket.id === activePlayer || 
                             (!activePlayer && playerIds[0] === socket.id);
@@ -202,11 +202,15 @@ async function startServer() {
           const targetPlayer = activePlayer;
           
           if (targetPlayer && players[targetPlayer]) {
-            players[targetPlayer].currentScore = (players[targetPlayer].currentScore || 0) + prize.value;
-            if (players[targetPlayer].currentScore > players[targetPlayer].score) {
-              players[targetPlayer].score = players[targetPlayer].currentScore;
+            if (isValidWin) {
+              players[targetPlayer].currentScore = (players[targetPlayer].currentScore || 0) + prize.value;
+              if (players[targetPlayer].currentScore > players[targetPlayer].score) {
+                players[targetPlayer].score = players[targetPlayer].currentScore;
+              }
+              io.emit('prize_removed', { prizeId, playerId: targetPlayer, score: players[targetPlayer].currentScore });
+            } else {
+              io.emit('prize_removed', { prizeId, playerId: null, score: null });
             }
-            io.emit('prize_removed', { prizeId, playerId: targetPlayer, score: players[targetPlayer].currentScore });
           } else {
             io.emit('prize_removed', { prizeId, playerId: null, score: null });
           }

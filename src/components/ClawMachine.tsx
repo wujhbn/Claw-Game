@@ -252,12 +252,12 @@ export const ClawMachine = () => {
         </mesh>
 
         {/* Playfield Floor (with hole for chute) */}
-        <mesh position={[1.5, 0, 0]} receiveShadow castShadow>
-          <boxGeometry args={[7, 0.5, 10]} />
+        <mesh position={[1.85, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[7.3, 0.5, 11.0]} />
           <meshStandardMaterial color="#e0e0e0" metalness={0.2} roughness={0.8} />
         </mesh>
-        <mesh position={[-3.5, 0, -1.5]} receiveShadow castShadow>
-          <boxGeometry args={[3, 0.5, 7]} />
+        <mesh position={[-3.65, 0, -1.75]} receiveShadow castShadow>
+          <boxGeometry args={[3.7, 0.5, 7.5]} />
           <meshStandardMaterial color="#e0e0e0" metalness={0.2} roughness={0.8} />
         </mesh>
       </RigidBody>
@@ -296,19 +296,19 @@ export const ClawMachine = () => {
       {/* Glass Walls */}
       <RigidBody type="fixed" friction={0.5}>
         <mesh position={[-5.25, 5, 0]} receiveShadow castShadow>
-          <boxGeometry args={[0.1, 10, 10]} />
+          <boxGeometry args={[0.1, 10, 10.5]} />
           <meshPhysicalMaterial transparent opacity={0.3} roughness={0} transmission={0.9} thickness={0.1} side={THREE.DoubleSide} color="#ffffff" clearcoat={1} />
         </mesh>
         <mesh position={[5.25, 5, 0]} receiveShadow castShadow>
-          <boxGeometry args={[0.1, 10, 10]} />
+          <boxGeometry args={[0.1, 10, 10.5]} />
           <meshPhysicalMaterial transparent opacity={0.3} roughness={0} transmission={0.9} thickness={0.1} side={THREE.DoubleSide} color="#ffffff" clearcoat={1} />
         </mesh>
         <mesh position={[0, 5, -5.25]} receiveShadow castShadow>
-          <boxGeometry args={[10, 10, 0.1]} />
+          <boxGeometry args={[10.5, 10, 0.1]} />
           <meshPhysicalMaterial transparent opacity={0.3} roughness={0} transmission={0.9} thickness={0.1} side={THREE.DoubleSide} color="#ffffff" clearcoat={1} />
         </mesh>
         <mesh position={[0, 5, 5.25]} receiveShadow castShadow>
-          <boxGeometry args={[10, 10, 0.1]} />
+          <boxGeometry args={[10.5, 10, 0.1]} />
           <meshPhysicalMaterial transparent opacity={0.3} roughness={0} transmission={0.9} thickness={0.1} side={THREE.DoubleSide} color="#ffffff" clearcoat={1} />
         </mesh>
         
@@ -330,12 +330,12 @@ export const ClawMachine = () => {
         </mesh>
         
         {/* Chute Walls */}
-        <mesh position={[-1.9, 1.75, 3.5]} receiveShadow castShadow>
-          <boxGeometry args={[0.2, 3, 3]} />
+        <mesh position={[-2.0, 1.75, 3.6]} receiveShadow castShadow>
+          <boxGeometry args={[0.4, 3, 3.2]} />
           <meshStandardMaterial color="#9AA0A6" metalness={0.2} roughness={0.8} />
         </mesh>
-        <mesh position={[-3.5, 1.75, 1.9]} receiveShadow castShadow>
-          <boxGeometry args={[3, 3, 0.2]} />
+        <mesh position={[-3.5, 1.75, 2.0]} receiveShadow castShadow>
+          <boxGeometry args={[3.4, 3, 0.4]} />
           <meshStandardMaterial color="#9AA0A6" metalness={0.2} roughness={0.8} />
         </mesh>
       </RigidBody>

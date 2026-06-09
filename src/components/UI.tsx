@@ -26,13 +26,7 @@ export const UI = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [bgmOn, setBgmOn] = useState(audio.bgmEnabled);
   const [sfxOn, setSfxOn] = useState(audio.sfxEnabled);
-  const [gameDuration, setGameDuration] = useState(() => {
-    try {
-      const savedSecs = localStorage.getItem('shima_game_duration');
-      if (savedSecs) return parseInt(savedSecs, 10);
-    } catch (e) {}
-    return 60; // default 60s
-  });
+  const [gameDuration, setGameDuration] = useState(60);
 
   const [selectedPlushies, setSelectedPlushies] = useState<string[]>(() => {
     try {
@@ -203,7 +197,7 @@ export const UI = () => {
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#FFEAF0] to-[#FFF9E6] z-50 p-6 text-[#FF5D8F] select-none text-center">
         <div className="text-7xl animate-bounce mb-3">🪄</div>
         <div className="text-2xl font-black tracking-wider animate-pulse flex items-center gap-2">
-          <span>🌸 萌萌選物機 🌸</span>
+          <span>萌萌選物機</span>
         </div>
         <div className="text-sm text-pink-500 font-bold mt-3 bg-white/70 border border-pink-200 rounded-full px-5 py-2 shadow-sm">
           🌟 努力連線中，請等一下下喔...
@@ -216,7 +210,7 @@ export const UI = () => {
     return (
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#FFEAF0] to-[#FFF9E6] z-50 p-6 text-[#FF5D8F] select-none text-center">
         <div className="text-7xl animate-spin mb-3" style={{ animationDuration: '4s' }}>🍬</div>
-        <div className="text-2xl font-black tracking-wider animate-pulse">🌸 載入夢幻選物機世界中 🌸</div>
+        <div className="text-2xl font-black tracking-wider animate-pulse">載入夢幻選物機世界中</div>
         <div className="text-sm text-pink-500 font-bold mt-3 bg-white/70 border border-pink-200 rounded-full px-5 py-2 shadow-sm">
           🐾 馬上就要開始囉！好期待呀...
         </div>
@@ -234,11 +228,11 @@ export const UI = () => {
         <div className="flex justify-between items-start">
           <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_3px_0_0_#F5ECC6] border-2 border-[#FFE5A3] rounded-full px-4 sm:px-5 h-10 sm:h-[46px] pointer-events-auto flex items-center gap-3 font-sans">
             <span className="font-black text-[#FF5D8F] text-sm sm:text-base flex items-center gap-1.5">
-              🌸 選物機
+              選物機
             </span>
-            <div className="flex flex-col flex-1 items-end pt-0.5">
-               <span className="text-[8px] sm:text-[9px] text-[#FF8A9A] font-extrabold leading-none uppercase -mb-0.5">
-                 {isActive ? "當前" : "紀錄"}
+            <div className="flex items-center gap-1.5 flex-1 justify-end">
+               <span className="text-[10px] sm:text-[11px] text-[#FF8A9A] font-extrabold uppercase">
+                 分數
                </span>
                <span className="font-black text-[#FF5D8F] text-[15px] sm:text-[18px] leading-tight">
                  {isActive ? (me.currentScore || 0) : me.score}
@@ -254,7 +248,6 @@ export const UI = () => {
                   className="bg-[#FFFDF6]/95 backdrop-blur-md border border-[#FFCCD5] shadow-[0_3px_0_0_#FFE5E9] rounded-full px-3 sm:px-4 h-10 sm:h-[46px] flex items-center gap-1 sm:gap-1.5 font-sans font-black text-[#FF5D8F] text-xs sm:text-sm"
                   title="剩餘時間"
                 >
-                  <Clock size={14} className="text-[#FF5D8F] animate-spin sm:w-4 sm:h-4" style={{ animationDuration: '6s' }} />
                   <span>{timeLeft} 秒</span>
                 </div>
               )}
@@ -263,7 +256,6 @@ export const UI = () => {
                 className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_3px_0_0_#F5ECC6] border-2 border-[#FFE5A3] rounded-full px-4 sm:px-5 h-10 sm:h-[46px] flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95 text-amber-900 font-bold text-xs sm:text-sm"
                 title="開啟控制與排行榜"
               >
-                <Trophy size={16} className="text-amber-500 sm:w-4.5 sm:h-4.5" />
                 <span className="font-black text-[#B09980] tracking-wide">展開</span>
                 <Maximize2 size={12} className="text-[#FF8A9A] ml-0.5 sm:w-3.5 sm:h-3.5" />
               </button>
@@ -332,7 +324,7 @@ export const UI = () => {
                   <div className="flex flex-col h-full">
                     {activePlayer ? (
                       <div className="mb-2 sm:mb-4 p-2 sm:p-4 bg-rose-55/60 rounded-[18px] border-2 border-pink-200 flex-1 flex flex-col items-center justify-center">
-                        <div className="text-[10px] sm:text-xs text-rose-500 mb-1 lg:mb-2 font-black tracking-wider whitespace-nowrap">🌸 挑戰進行中 🌸</div>
+                        <div className="text-[10px] sm:text-xs text-rose-500 mb-1 lg:mb-2 font-black tracking-wider whitespace-nowrap">挑戰進行中</div>
                         <div className="font-black text-3xl sm:text-5xl text-[#FF497C] mb-1 sm:mb-2 animate-pulse">{timeLeft} 秒</div>
                         <div className="text-[10px] sm:text-sm font-bold text-rose-400 mb-2 sm:mb-4 text-center leading-tight">盡可能抓起更多可愛的鳥雀吧！</div>
                         <div className="bg-[#FFFDF6] px-2.5 py-1 text-[8px] sm:text-xs font-black text-amber-800 border border-amber-200 rounded-lg text-center leading-tight">
@@ -350,7 +342,7 @@ export const UI = () => {
                           onClick={() => { audio.playClickSFX(); joinQueue(gameDuration, selectedPlushies); }}
                           className="w-full bg-[#FF6B8B] hover:bg-[#FF5579] text-white font-black py-2.5 sm:py-4 rounded-2xl shadow-md border-b-4 border-[#C93B58] hover:shadow-lg transition-all active:translate-y-1 active:border-b-0 flex items-center justify-center gap-1.5 text-[11px] sm:text-lg cursor-pointer select-none"
                         >
-                          <Play size={14} className="sm:w-5 sm:h-5 text-pink-100" fill="currentColor" /> 開始挑戰 🌸
+                          <Play size={14} className="sm:w-5 sm:h-5 text-pink-100" fill="currentColor" /> 開始挑戰
                         </button>
                       </div>
                     )}
@@ -475,7 +467,7 @@ export const UI = () => {
             <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-md p-3 rounded-full border-2 border-[#FFA6B9] pointer-events-auto flex items-center gap-2 scale-90 sm:scale-100 origin-bottom-right">
               <span className="w-2 h-2 rounded-full bg-[#FF8A9A] animate-pulse"></span>
               <span className="text-[10px] sm:text-xs font-black text-rose-500">
-                🌸 正在旁觀刺激的線上夾取挑戰進行中...
+                正在旁觀刺激的線上夾取挑戰進行中...
               </span>
             </div>
           ) : null}
@@ -493,7 +485,7 @@ export const UI = () => {
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md pointer-events-auto">
           <div className="bg-[#FFFDF6] p-8 rounded-[32px] shadow-2xl max-w-md w-full text-center border-4 border-[#FFA6B9] mx-4 animate-scaleUp">
             <h2 className="text-4xl sm:text-5xl font-black mb-3 text-rose-600 tracking-tight">
-              挑戰結束囉！🌸
+              挑戰結束囉！
             </h2>
             <p className="text-xl text-amber-955 mb-6 font-black">
               恭喜你夾取了 <span className="font-extrabold text-rose-500 text-3xl px-1">{gameOver.winner?.currentScore || 0}</span> 分！🌟

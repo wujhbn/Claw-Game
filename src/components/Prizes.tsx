@@ -60,7 +60,11 @@ export const Prizes = ({ isLocal }: { isLocal: boolean }) => {
               
               if (p.y < -4.0 && !capturedPrizes.current.has(prize.id)) {
                 capturedPrizes.current.add(prize.id);
-                capturePrize(prize.id);
+                if (p.x < -1.0 && p.z > 1.0) {
+                  capturePrize(prize.id, true);
+                } else {
+                  capturePrize(prize.id, false); // Dropped outside the machine
+                }
               } else {
                 const r = ref.rotation();
                 updates.push({ id: prize.id, position: [p.x, p.y, p.z], rotation: [r.x, r.y, r.z, r.w] });
@@ -123,6 +127,7 @@ export const Prizes = ({ isLocal }: { isLocal: boolean }) => {
             colliders="hull" 
             mass={1} 
             friction={0.1}
+            ccd={true}
             userData={{ id: p.id }}
           >
             {p.type === 'bugdroid' ? (
