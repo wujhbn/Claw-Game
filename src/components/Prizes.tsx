@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { RigidBody } from '@react-three/rapier';
 import * as THREE from 'three';
@@ -48,6 +48,12 @@ export const Prizes = ({ isLocal }: { isLocal: boolean }) => {
   const dynamicRefs = useRef<Record<string, any>>({});
   const capturedPrizes = useRef<Set<string>>(new Set());
 
+  useEffect(() => {
+    if (activePlayer !== undefined) {
+      capturedPrizes.current.clear();
+    }
+  }, [activePlayer]);
+
   useFrame((state) => {
     if (isPhysicsHost) {
       if (state.clock.elapsedTime % 0.1 < 0.02) {
@@ -60,11 +66,10 @@ export const Prizes = ({ isLocal }: { isLocal: boolean }) => {
               
               if (p.y < -4.0 && !capturedPrizes.current.has(prize.id)) {
                 capturedPrizes.current.add(prize.id);
-                if (p.x < -1.0 && p.z > 1.0) {
-                  capturePrize(prize.id, true);
-                } else {
-                  capturePrize(prize.id, false); // Dropped outside the machine
-                }
+                const isValid = p.x < -1.0 && p.z > 1.0;
+                setTimeout(() => {
+                  capturePrize(prize.id, isValid);
+                }, 100);
               } else {
                 const r = ref.rotation();
                 updates.push({ id: prize.id, position: [p.x, p.y, p.z], rotation: [r.x, r.y, r.z, r.w] });

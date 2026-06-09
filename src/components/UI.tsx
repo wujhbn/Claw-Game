@@ -459,7 +459,7 @@ export const UI = () => {
                   onClick={handleDrop}
                   className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 bg-[#FF4D6D] text-white rounded-full font-black text-lg sm:text-2xl flex flex-col items-center justify-center shadow-[0_6px_0_0_#C91A3D] active:translate-y-1 active:shadow-none hover:bg-[#FF2E55] transition-all cursor-pointer select-none border-t border-white/20"
                 >
-                  <div className="text-white font-black tracking-widest drop-shadow-md">Drop</div>
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 border-4 border-white rounded-full"></div>
                 </button>
               </div>
             </div>

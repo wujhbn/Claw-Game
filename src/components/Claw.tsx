@@ -40,6 +40,15 @@ export const Claw = ({ isLocal }: { isLocal: boolean }) => {
   const lastEmit = useRef(0);
   
   useEffect(() => {
+    if (activePlayer === myId && myId !== null) {
+       localState.current = { x: 0, y: 8, z: 0, state: 'idle', prongsClosed: false, timer: 0, grabbedPrizeId: null };
+    } else if (!activePlayer) {
+       localState.current.grabbedPrizeId = null;
+       localState.current.state = 'idle';
+    }
+  }, [activePlayer, myId]);
+
+  useEffect(() => {
     if (!isLocal) return;
     const down = (e: KeyboardEvent) => {
       if(e.key === 'w' || e.key === 'ArrowUp') {
