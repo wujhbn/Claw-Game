@@ -232,21 +232,26 @@ export const UI = () => {
       <div className="md:hidden sm:landscape:hidden absolute inset-0 pointer-events-none p-3 xs:p-4 sm:p-6 flex flex-col justify-between font-sans">
         {/* Top Bar */}
         <div className="flex justify-between items-start">
-          <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_3px_0_0_#F5ECC6] border-2 border-[#FFE5A3] rounded-full px-4 py-2 sm:px-5 sm:py-3.5 pointer-events-auto flex items-center gap-2 text-xs sm:text-sm font-sans">
-            <span className="font-black text-[#B09980] tracking-wide">
-              {isActive ? "當前分數" : "最高紀錄"}
+          <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_3px_0_0_#F5ECC6] border-2 border-[#FFE5A3] rounded-full px-4 sm:px-5 h-10 sm:h-[46px] pointer-events-auto flex items-center gap-3 font-sans">
+            <span className="font-black text-[#FF5D8F] text-sm sm:text-base flex items-center gap-1.5">
+              🌸 選物機
             </span>
-            <span className="font-black text-[#FF5D8F] text-sm sm:text-base">
-              {isActive ? (me.currentScore || 0) : me.score}
-            </span>
+            <div className="flex flex-col flex-1 items-end pt-0.5">
+               <span className="text-[8px] sm:text-[9px] text-[#FF8A9A] font-extrabold leading-none uppercase -mb-0.5">
+                 {isActive ? "當前" : "紀錄"}
+               </span>
+               <span className="font-black text-[#FF5D8F] text-[15px] sm:text-[18px] leading-tight">
+                 {isActive ? (me.currentScore || 0) : me.score}
+               </span>
+            </div>
           </div>
 
           {/* Right Panel (Consolidated & Collapsible) */}
           {isCollapsed ? (
-            <div className="flex items-center gap-1.5 xs:gap-2 pointer-events-auto scale-90 sm:scale-100 origin-top-right">
+            <div className="flex items-center gap-1.5 xs:gap-2 pointer-events-auto origin-top-right">
               {activePlayer && (
                 <div 
-                  className="bg-[#FFFDF6]/95 backdrop-blur-md border border-[#FFCCD5] shadow-[0_3px_0_0_#FFE5E9] rounded-full px-3 py-2 sm:px-4 sm:py-3.5 flex items-center gap-1 sm:gap-1.5 font-sans font-black text-[#FF5D8F] text-xs sm:text-sm"
+                  className="bg-[#FFFDF6]/95 backdrop-blur-md border border-[#FFCCD5] shadow-[0_3px_0_0_#FFE5E9] rounded-full px-3 sm:px-4 h-10 sm:h-[46px] flex items-center gap-1 sm:gap-1.5 font-sans font-black text-[#FF5D8F] text-xs sm:text-sm"
                   title="剩餘時間"
                 >
                   <Clock size={14} className="text-[#FF5D8F] animate-spin sm:w-4 sm:h-4" style={{ animationDuration: '6s' }} />
@@ -255,13 +260,12 @@ export const UI = () => {
               )}
               <button
                 onClick={() => setIsCollapsed(false)}
-                className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_3px_0_0_#F5ECC6] border-2 border-[#FFE5A3] rounded-full px-4 py-2 sm:px-5 sm:py-3.5 flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95 text-amber-900 font-bold text-xs sm:text-sm"
+                className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_3px_0_0_#F5ECC6] border-2 border-[#FFE5A3] rounded-full px-4 sm:px-5 h-10 sm:h-[46px] flex items-center gap-1.5 sm:gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95 text-amber-900 font-bold text-xs sm:text-sm"
                 title="開啟控制與排行榜"
               >
                 <Trophy size={16} className="text-amber-500 sm:w-4.5 sm:h-4.5" />
-                <span className="hidden xs:inline font-black text-amber-800">開啟控制面板 🌟</span>
-                <span className="xs:hidden font-black text-amber-800">展開</span>
-                <Maximize2 size={12} className="text-amber-400 ml-0.5 sm:w-3.5 sm:h-3.5" />
+                <span className="font-black text-[#B09980] tracking-wide">展開</span>
+                <Maximize2 size={12} className="text-[#FF8A9A] ml-0.5 sm:w-3.5 sm:h-3.5" />
               </button>
             </div>
           ) : (
@@ -506,7 +510,7 @@ export const UI = () => {
       </div>
 
       {/* 2. DOCKED PREMIUM SIDEBAR CONSOLE OVERLAY */}
-      <div className="hidden md:flex sm:landscape:flex absolute right-0 top-0 bottom-0 w-[360px] lg:w-[410px] bg-[#FFFDF6]/95 border-l-4 border-[#FCE6BD] shadow-[-10px_0_40px_rgba(0,0,0,0.05)] flex-col justify-between pointer-events-auto text-amber-950 p-5 font-sans overflow-hidden select-none z-10 backdrop-blur-lg">
+      <div className={`hidden md:flex sm:landscape:flex absolute right-0 top-0 bottom-0 w-[360px] lg:w-[410px] bg-[#FFFDF6]/95 border-l-4 border-[#FCE6BD] shadow-[-10px_0_40px_rgba(0,0,0,0.05)] flex-col justify-between pointer-events-auto text-amber-950 p-5 font-sans overflow-hidden select-none z-10 backdrop-blur-lg transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isActive ? 'translate-x-[105%]' : 'translate-x-0'}`}>
         {/* Terminal Header */}
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-center">
