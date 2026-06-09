@@ -392,15 +392,19 @@ export const UI = () => {
             </div>
           )}
         </div>
+      </div>
 
-        {/* Touch Controller Overlay (Anchored at the bottom) */}
-        <div className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-end pointer-events-none gap-4 mt-auto">
+      {/* ============================================== */}
+      {/* GLOBAL TOUCH CONTROLLER OVERLAY (ANCHORED AT BOTTOM) */}
+      {/* ============================================== */}
+      <div className="absolute inset-x-0 bottom-0 pointer-events-none p-3 xs:p-4 sm:p-6 flex flex-col justify-end z-30 font-sans">
+        <div className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-end gap-4 mt-auto">
           {/* Left Side: Empty block */}
           <div className="hidden sm:block"></div>
 
-          {/* Center/Right Hand Side: Touch controls for mobile player */}
+          {/* Center/Right Hand Side: Touch controls for mobile/tablet/desktop player */}
           {isActive ? (
-            <div className="mx-auto sm:mx-0 bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-[2rem] border-4 border-[#F7DBA7] flex items-center justify-between gap-4 xs:gap-6 sm:gap-10 pointer-events-auto select-none w-full sm:w-auto max-w-[280px] xs:max-w-[310px] sm:max-w-md scale-95 sm:scale-100 origin-bottom">
+            <div className="mx-auto sm:mx-0 lg:mr-[15%] xl:mr-[20%] bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-[2rem] border-4 border-[#F7DBA7] flex items-center justify-between gap-4 xs:gap-6 sm:gap-10 pointer-events-auto select-none w-full sm:w-auto max-w-[280px] xs:max-w-[310px] sm:max-w-md scale-95 sm:scale-100 origin-bottom">
               {/* Elegant D-pad for sliding crane */}
               <div className="flex flex-col items-center gap-1 sm:gap-1.5 flex-1 sm:flex-initial">
                 <div className="grid grid-cols-3 gap-1 w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32">
@@ -467,7 +471,7 @@ export const UI = () => {
               </div>
             </div>
           ) : activePlayer ? (
-            <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-md p-3 rounded-full border-2 border-[#FFA6B9] pointer-events-auto flex items-center gap-2 scale-90 sm:scale-100 origin-bottom-right">
+            <div className="md:hidden sm:landscape:hidden bg-[#FFFDF6]/95 backdrop-blur-md shadow-md p-3 rounded-full border-2 border-[#FFA6B9] pointer-events-auto flex items-center gap-2 scale-90 sm:scale-100 origin-bottom-right">
               <span className="w-2 h-2 rounded-full bg-[#FF8A9A] animate-pulse"></span>
               <span className="text-[10px] sm:text-xs font-black text-rose-500">
                 🌸 正在旁觀刺激的線上夾取挑戰進行中...
@@ -796,79 +800,8 @@ export const UI = () => {
 
         {/* Sidebar Arcade Deck Footer Controls */}
         <div className="border-t border-[#FCE6BD] pt-4 flex flex-col gap-3">
-          {isActive ? (
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between gap-4">
-                {/* Embedded Joystick D-Pad */}
-                <div className="grid grid-cols-3 gap-1 h-32 w-32 shrink-0">
-                  <div />
-                  <button
-                    onMouseDown={() => handleStartMove('w')}
-                    onMouseUp={() => handleEndMove('w')}
-                    onMouseLeave={() => handleEndMove('w')}
-                    onTouchStart={(e) => { e.preventDefault(); handleStartMove('w'); }}
-                    onTouchEnd={(e) => { e.preventDefault(); handleEndMove('w'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.w ? 'bg-[#FF8A9A] text-white border-[#FF8A9A] scale-95 shadow-[0_0_12px_rgba(255,138,154,0.5)]' : 'bg-white text-rose-500 border-2 border-[#FCE6BD] shadow-[0_3px_0_0_#F7DBA7] hover:bg-rose-50/20'}`}
-                  >
-                    <ArrowUp size={16} />
-                    <span className="text-[8px] font-black text-rose-400">前進 W</span>
-                  </button>
-                  <div />
-
-                  <button
-                    onMouseDown={() => handleStartMove('a')}
-                    onMouseUp={() => handleEndMove('a')}
-                    onMouseLeave={() => handleEndMove('a')}
-                    onTouchStart={(e) => { e.preventDefault(); handleStartMove('a'); }}
-                    onTouchEnd={(e) => { e.preventDefault(); handleEndMove('a'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.a ? 'bg-[#FF8A9A] text-white border-[#FF8A9A] scale-95 shadow-[0_0_12px_rgba(255,138,154,0.5)]' : 'bg-white text-rose-500 border-2 border-[#FCE6BD] shadow-[0_3px_0_0_#F7DBA7] hover:bg-rose-50/20'}`}
-                  >
-                    <ArrowLeft size={16} />
-                    <span className="text-[8px] font-black text-rose-400">向左 A</span>
-                  </button>
-                  <div className="flex items-center justify-center">
-                    <div className="w-3 h-3 rounded-full bg-rose-200"></div>
-                  </div>
-                  <button
-                    onMouseDown={() => handleStartMove('d')}
-                    onMouseUp={() => handleEndMove('d')}
-                    onMouseLeave={() => handleEndMove('d')}
-                    onTouchStart={(e) => { e.preventDefault(); handleStartMove('d'); }}
-                    onTouchEnd={(e) => { e.preventDefault(); handleEndMove('d'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.d ? 'bg-[#FF8A9A] text-white border-[#FF8A9A] scale-95 shadow-[0_0_12px_rgba(255,138,154,0.5)]' : 'bg-white text-rose-500 border-2 border-[#FCE6BD] shadow-[0_3px_0_0_#F7DBA7] hover:bg-rose-50/20'}`}
-                  >
-                    <ArrowRight size={16} />
-                    <span className="text-[8px] font-black text-rose-400">向右 D</span>
-                  </button>
-
-                  <div />
-                  <button
-                    onMouseDown={() => handleStartMove('s')}
-                    onMouseUp={() => handleEndMove('s')}
-                    onMouseLeave={() => handleEndMove('s')}
-                    onTouchStart={(e) => { e.preventDefault(); handleStartMove('s'); }}
-                    onTouchEnd={(e) => { e.preventDefault(); handleEndMove('s'); }}
-                    className={`rounded-xl flex flex-col items-center justify-center border transition-all cursor-pointer ${pressedDirs.s ? 'bg-[#FF8A9A] text-white border-[#FF8A9A] scale-95 shadow-[0_0_12px_rgba(255,138,154,0.5)]' : 'bg-white text-rose-500 border-2 border-[#FCE6BD] shadow-[0_3px_0_0_#F7DBA7] hover:bg-rose-50/20'}`}
-                  >
-                    <ArrowDown size={16} />
-                    <span className="text-[8px] font-black text-rose-400">後退 S</span>
-                  </button>
-                  <div />
-                </div>
-
-                {/* Massive launch trigger button */}
-                <div className="flex-1 flex flex-col items-center justify-center py-2 gap-1.5 font-sans">
-                  <button
-                    onClick={handleDrop}
-                    className="w-24 h-24 bg-[#FF4D6D] text-white rounded-full font-black text-base flex flex-col items-center justify-center shadow-[0_6px_0_0_#C91A3D] active:translate-y-1 active:shadow-none hover:bg-[#FF2E55] transition-all cursor-pointer select-none border-t border-white/20"
-                  >
-                    <span className="text-xl font-black tracking-widest drop-shadow">Drop</span>
-                    <span className="text-[9px] text-pink-100 font-extrabold tracking-wider mt-1">空白鍵 SPACE</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
+          {/* Controls are now rendered globally so tablet can use them too */}
+          {!isActive && (
             /* Spectator details footer */
             <div className="bg-[#FAF3E5] p-3 rounded-2xl border border-[#EED7B5] flex justify-between items-center text-[10px] text-rose-500 font-black shadow-inner">
               <span>🎮 鍵盤 W/A/S/D 與空白鍵隨時可用</span>
