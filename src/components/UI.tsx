@@ -223,7 +223,7 @@ export const UI = () => {
       {/* ============================================== */}
       {/* A. UNIVERSAL RESPONSIVE LAYOUT (ALL DEVICES)   */}
       {/* ============================================== */}
-      <div className="absolute inset-0 pointer-events-none p-3 xs:p-4 sm:p-6 flex flex-col justify-between font-sans z-10">
+      <div className="absolute inset-0 pointer-events-none p-3 xs:p-4 sm:p-6 lg:p-8 flex flex-col justify-between font-sans z-10 w-full">
         {/* Top Bar */}
         <div className="flex justify-between items-start">
           <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_3px_0_0_#F5ECC6] border-2 border-[#FFE5A3] rounded-full px-4 sm:px-5 h-10 sm:h-[46px] pointer-events-auto flex items-center gap-3 font-sans">
@@ -389,14 +389,12 @@ export const UI = () => {
       {/* ============================================== */}
       {/* GLOBAL TOUCH CONTROLLER OVERLAY (ANCHORED AT BOTTOM) */}
       {/* ============================================== */}
-      <div className="absolute inset-x-0 bottom-0 pointer-events-none p-3 xs:p-4 sm:p-6 flex flex-col justify-end z-30 font-sans">
-        <div className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-end gap-4 mt-auto">
-          {/* Left Side: Empty block */}
-          <div className="hidden sm:block"></div>
-
-          {/* Center/Right Hand Side: Touch controls for mobile/tablet/desktop player */}
+      <div className="absolute inset-x-0 bottom-0 pointer-events-none p-4 xs:p-5 sm:p-8 md:p-12 pb-6 flex flex-col justify-end z-30 font-sans w-full">
+        <div className="w-full flex justify-between items-end mt-auto pointer-events-none">
+          
+          {/* Controls Container */}
           {isActive ? (
-            <div className="w-full flex justify-between items-end px-2 sm:px-6 lg:px-12 pointer-events-none">
+            <div className="w-full flex justify-between items-end pointer-events-none">
               
               {/* Elegant D-pad for sliding crane (Left Side) */}
               <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-3xl border-4 border-[#F7DBA7] flex items-center justify-center pointer-events-auto select-none scale-90 xs:scale-95 sm:scale-100 origin-bottom-left">

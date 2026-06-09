@@ -14,18 +14,27 @@ import { useGameStore } from '../store';
 import { useEffect, Suspense } from 'react';
 
 const CameraSetup = ({ isLocal }: { isLocal: boolean }) => {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
 
   useEffect(() => {
+    const isMobile = size.width < 768 || size.width / size.height < 0.8;
     if (isLocal) {
       // Front view when playing
-      camera.position.set(0, 8, 26);
+      if (isMobile) {
+        camera.position.set(0, 9, 38);
+      } else {
+        camera.position.set(0, 8, 26);
+      }
     } else {
       // Diagonal view when spectating
-      camera.position.set(18, 8, 18);
+      if (isMobile) {
+        camera.position.set(24, 12, 24);
+      } else {
+        camera.position.set(18, 8, 18);
+      }
     }
     camera.lookAt(0, 4, 0);
-  }, [isLocal, camera]);
+  }, [isLocal, camera, size]);
 
   return null;
 };
