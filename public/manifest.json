@@ -1,6 +1,6 @@
 {
-  "name": "Claw Game"，
-  "short_name": "Claw Game",
+  "name": "選物販賣機"，
+  "short_name": "選物販賣機",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#ffffff",
