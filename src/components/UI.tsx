@@ -404,9 +404,10 @@ export const UI = () => {
 
           {/* Center/Right Hand Side: Touch controls for mobile/tablet/desktop player */}
           {isActive ? (
-            <div className="mx-auto sm:mx-0 lg:mr-[15%] xl:mr-[20%] bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-[2rem] border-4 border-[#F7DBA7] flex items-center justify-between gap-4 xs:gap-6 sm:gap-10 pointer-events-auto select-none w-full sm:w-auto max-w-[280px] xs:max-w-[310px] sm:max-w-md scale-95 sm:scale-100 origin-bottom">
-              {/* Elegant D-pad for sliding crane */}
-              <div className="flex flex-col items-center gap-1 sm:gap-1.5 flex-1 sm:flex-initial">
+            <div className="w-full flex justify-between items-end px-2 sm:px-6 lg:px-12 pointer-events-none">
+              
+              {/* Elegant D-pad for sliding crane (Left Side) */}
+              <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-3xl border-4 border-[#F7DBA7] flex items-center justify-center pointer-events-auto select-none scale-90 xs:scale-95 sm:scale-100 origin-bottom-left">
                 <div className="grid grid-cols-3 gap-1 w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32">
                   <div></div>
                   <button
@@ -460,13 +461,13 @@ export const UI = () => {
                 </div>
               </div>
 
-              {/* Arcade Style tactile DROP button */}
-              <div className="flex flex-col items-center gap-1 sm:gap-1.5 font-sans">
+              {/* Arcade Style tactile DROP button (Right Side) */}
+              <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-3xl border-4 border-[#F7DBA7] flex flex-col items-center justify-center pointer-events-auto select-none scale-90 xs:scale-95 sm:scale-100 origin-bottom-right">
                 <button
                   onClick={handleDrop}
-                  className="w-16 h-16 xs:w-20 xs:h-20 sm:w-26 sm:h-26 bg-[#FF4D6D] text-white rounded-full font-black text-sm sm:text-lg flex flex-col items-center justify-center shadow-[0_5px_0_0_#C91A3D] active:translate-y-1 active:shadow-none hover:bg-[#FF2E55] transition-all cursor-pointer select-none"
+                  className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 bg-[#FF4D6D] text-white rounded-full font-black text-lg sm:text-2xl flex flex-col items-center justify-center shadow-[0_6px_0_0_#C91A3D] active:translate-y-1 active:shadow-none hover:bg-[#FF2E55] transition-all cursor-pointer select-none border-t border-white/20"
                 >
-                  <div className="text-white text-base xs:text-lg sm:text-xl font-black tracking-widest drop-shadow-sm">Drop</div>
+                  <div className="text-white font-black tracking-widest drop-shadow-md">Drop</div>
                 </button>
               </div>
             </div>
