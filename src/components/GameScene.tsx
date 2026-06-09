@@ -11,7 +11,7 @@ import { Claw } from './Claw';
 import { Prizes } from './Prizes';
 import { ShimaEnaga } from './ShimaEnaga';
 import { useGameStore } from '../store';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 const CameraSetup = ({ isLocal }: { isLocal: boolean }) => {
   const { camera } = useThree();
@@ -37,20 +37,22 @@ export const GameScene = () => {
 
   return (
     <Canvas shadows>
-      <PerspectiveCamera makeDefault position={[18, 8, 22]} fov={45} />
-      <CameraSetup isLocal={isLocal} />
-      <ambientLight intensity={2.5} />
-      <pointLight position={[0, 9, 0]} intensity={4.0} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0001} />
+      <Suspense fallback={null}>
+        <PerspectiveCamera makeDefault position={[18, 8, 22]} fov={45} />
+        <CameraSetup isLocal={isLocal} />
+        <ambientLight intensity={2.5} />
+        <pointLight position={[0, 9, 0]} intensity={4.0} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0001} />
 
-      <Physics>
-        <ClawMachine />
-        <Claw isLocal={isLocal} />
-        <Prizes isLocal={isLocal} />
-      </Physics>
+        <Physics>
+          <ClawMachine />
+          <Claw isLocal={isLocal} />
+          <Prizes isLocal={isLocal} />
+        </Physics>
 
-      <ShimaEnaga variant="giant" position={[0, 10.5, 0]} rotation={[0, Math.PI / 4, 0]} scale={1.5} color="#FBBC04" />
+        <ShimaEnaga variant="giant" position={[0, 10.5, 0]} rotation={[0, Math.PI / 4, 0]} scale={1.5} color="#FBBC04" />
 
-      <Environment files="/google-office.jpg" background blur={0.02} environmentIntensity={1.5} backgroundRotation={[0, Math.PI * 0.725, 0]} environmentRotation={[0, Math.PI * 1.2, 0]} />
+        <Environment files="/google-office.jpg" background blur={0.02} environmentIntensity={1.5} backgroundRotation={[0, Math.PI * 0.725, 0]} environmentRotation={[0, Math.PI * 1.2, 0]} />
+      </Suspense>
     </Canvas>
   );
 };

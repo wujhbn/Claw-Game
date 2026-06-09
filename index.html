@@ -3,7 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>夾夾樂 (Claw Game)</title>
+    <title>選物機</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;750;900&display=swap" rel="stylesheet">
+    <script>
+      console.log("index.html head script running!");
+      function showError(msg) {
+        var errDiv = document.createElement('div');
+        errDiv.style.cssText = 'color:red; background:white; padding:20px; position:absolute; z-index:999999; top:0; left:0; width:100%; font-size:16px; border:2px solid red;';
+        errDiv.innerHTML = msg;
+        if (document.body) {
+          document.body.appendChild(errDiv);
+        } else {
+          document.addEventListener('DOMContentLoaded', function() {
+            document.body.appendChild(errDiv);
+          });
+        }
+      }
+      window.addEventListener('error', function(e) {
+        showError('ERROR: ' + e.message + '<br>' + e.filename + ':' + e.lineno);
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        showError('PROMISE ERROR: ' + (e.reason && e.reason.stack ? e.reason.stack : (e.reason && e.reason.message ? e.reason.message : e.reason)));
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
