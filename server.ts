@@ -21,6 +21,7 @@ async function startServer() {
   const players: Record<string, any> = {};
   let playerCount = 0;
   let activePlayer: string | null = null;
+  let isStartingGame = false;
   let turnEndTime = 0;
   let prizes: any[] = [];
   
@@ -119,9 +120,17 @@ async function startServer() {
   }
 
   function endGame() {
-    if (activePlayer !== null) {
+    if (activePlayer !== null && players[activePlayer]) {
+      const p = players[activePlayer];
+      if (p.currentScore > p.score) {
+        p.score = p.currentScore;
+      }
+      
+      const winner = { ...p };
       const sortedPlayers = Object.values(players).sort((a, b) => b.score - a.score);
-      io.emit('game_over', { winner: players[activePlayer], players: sortedPlayers });
+      io.emit('game_over', { winner, players: sortedPlayers });
+      
+      io.emit('players_update', players); // Send updated players with new high scores if any
     }
     activePlayer = null;
     io.emit('turn_start', { activePlayer: null, queue: [] });
@@ -162,9 +171,11 @@ async function startServer() {
 
     socket.on('join_queue', (customDuration?: number, selectedToys?: string[]) => {
       if (!players[socket.id]) return;
-      if (!activePlayer) {
+      if (!activePlayer && !isStartingGame) {
+        isStartingGame = true;
         const duration = (typeof customDuration === 'number' && customDuration >= 10 && customDuration <= 300) ? customDuration : 60;
         startGame(socket.id, duration, selectedToys);
+        isStartingGame = false;
       }
     });
 

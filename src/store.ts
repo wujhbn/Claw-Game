@@ -156,10 +156,14 @@ export const useGameStore = create<GameState>((set, get) => ({
       // Local offline mode
       const duration = durationSeconds || 60;
       const myId = get().myId!;
-      set({ 
-        activePlayer: myId, 
-        turnEndTime: Date.now() + duration * 1000,
-        clawState: { x: 0, y: 8, z: 0, state: 'idle', prongsClosed: false, grabbedPrizeId: null },
+      set((state) => {
+        const p = state.players[myId];
+        return {
+          players: { ...state.players, [myId]: { ...p, currentScore: 0 } },
+          activePlayer: myId, 
+          turnEndTime: Date.now() + duration * 1000,
+          clawState: { x: 0, y: 8, z: 0, state: 'idle', prongsClosed: false, grabbedPrizeId: null },
+        };
       });
       // Generate some dummy prizes locally
       const validToys = selectedPlushies || ['shima_enaga', 'bear', 'bunny', 'cat', 'duck'];
@@ -185,7 +189,9 @@ export const useGameStore = create<GameState>((set, get) => ({
 
       // Local game timeout
       setTimeout(() => {
-         set({ activePlayer: null, gameOver: { winner: get().players[myId], players: [get().players[myId]] } });
+         const currentState = get();
+         const sortedPlayers = Object.values(currentState.players).sort((a: any, b: any) => b.score - a.score);
+         set({ activePlayer: null, gameOver: { winner: currentState.players[myId], players: sortedPlayers } });
       }, duration * 1000);
     }
   },
@@ -213,8 +219,30 @@ export const useGameStore = create<GameState>((set, get) => ({
         const currentScore = isValidWin ? (player.currentScore || 0) + prize.value : (player.currentScore || 0);
         const newScore = isValidWin ? Math.max(player.score || 0, currentScore) : player.score;
         
+        let remainingPrizes = state.prizes.filter(p => p.id !== prizeId);
+        
+        if (remainingPrizes.length < 10) {
+           const types = ['dodecahedron', 'sphere', 'box'];
+           const colors = ['#FBBC04', '#EA4335', '#34A853', '#E37400', '#9AA0A6'];
+           const validToys = ['shima_enaga', 'bear', 'bunny', 'cat', 'duck'];
+           const runId = Math.floor(Math.random() * 1000000);
+           for(let i=0; i<30; i++) {
+             const scale = 0.5 + Math.random() * 1.5;
+             remainingPrizes.push({
+               id: `local_prize_${runId}_${i}`,
+               type: types[Math.floor(Math.random() * types.length)],
+               toyType: validToys[Math.floor(Math.random() * validToys.length)],
+               color: colors[Math.floor(Math.random() * colors.length)],
+               value: Math.floor(30 * scale),
+               scale: scale,
+               position: [(Math.random()-0.5)*7, Math.random()*2 + 1, (Math.random()-0.5)*7],
+               rotation: [0,0,0,1]
+             });
+           }
+        }
+        
         set((s) => ({
-          prizes: s.prizes.filter(p => p.id !== prizeId),
+          prizes: remainingPrizes,
           players: { ...s.players, [myId]: { ...player, currentScore, score: newScore } }
         }));
       }

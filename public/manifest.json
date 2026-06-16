@@ -1,22 +1,32 @@
 {
-  "name": "選物販賣機"，
-  "short_name": "選物販賣機",
+  "name": "選物機",
+  "short_name": "選物機",
+  "description": "線上選物機",
   "display": "standalone",
   "start_url": "/",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#FF5D8F",
+  "background_color": "#FFFDF6",
+  "lang": "zh-TW",
+  "orientation": "portrait",
+  "categories": ["games", "entertainment"],
   "icons": [
     {
-      "src": "icon-192x192.png",
+      "src": "/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512x512.png",
+      "src": "/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

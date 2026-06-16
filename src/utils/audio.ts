@@ -36,6 +36,19 @@ class AudioEngine {
     }
   }
 
+  // Warm up audio context on first interaction to prevent delay
+  warmup() {
+    this.initContext();
+    if (!this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    gain.gain.value = 0;
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 0.01);
+  }
+
   // Set BGM preference
   setBgm(enabled: boolean) {
     this.bgmEnabled = enabled;

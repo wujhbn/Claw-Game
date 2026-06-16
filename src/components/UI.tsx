@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useGameStore } from '../store';
-import { Users, Trophy, Play, Clock, Info, ListOrdered, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Minimize2, Maximize2, Settings, Volume2, VolumeX, Check, Sparkles } from 'lucide-react';
+import { Users, Trophy, Play, Clock, Info, ListOrdered, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Minimize2, Maximize2, Settings, Volume2, VolumeX, Check, Sparkles, Share2 } from 'lucide-react';
 import { audio } from '../utils/audio';
 
 // Supported plushie types
@@ -26,7 +26,10 @@ export const UI = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [bgmOn, setBgmOn] = useState(audio.bgmEnabled);
   const [sfxOn, setSfxOn] = useState(audio.sfxEnabled);
-  const [gameDuration, setGameDuration] = useState(60);
+  const [gameDuration, setGameDuration] = useState(() => {
+    const saved = localStorage.getItem('shima_game_duration');
+    return saved ? parseInt(saved, 10) : 60;
+  });
 
   const [selectedPlushies, setSelectedPlushies] = useState<string[]>(() => {
     try {
@@ -139,8 +142,82 @@ export const UI = () => {
     window.dispatchEvent(new CustomEvent('claw_move_end', { detail: dir }));
   };
 
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      audio.warmup();
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('touchstart', handleFirstInteraction);
+    };
+    window.addEventListener('click', handleFirstInteraction);
+    window.addEventListener('touchstart', handleFirstInteraction);
+    return () => {
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('touchstart', handleFirstInteraction);
+    };
+  }, []);
+
+  const handleShare = async () => {
+    audio.playClickSFX();
+    const text = `我在萌萌選物機夾到了 ${gameOver?.winner?.currentScore || 0} 分！🎮`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: '萌萌選物機 🎮',
+          text: text,
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.log('Share canceled or failed', err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(text + ' ' + window.location.href);
+        alert('已複製分享內容到剪貼簿！');
+      } catch (err) {
+        alert('分享失敗，請手動複製喔！');
+      }
+    }
+  };
+
   const handleDrop = () => {
     window.dispatchEvent(new CustomEvent('force_drop'));
+  };
+
+  const touchStartPos = useRef<{ x: number, y: number } | null>(null);
+  const currentSwipeDir = useRef<'w' | 's' | 'a' | 'd' | null>(null);
+
+  const handleTouchStartPad = (e: React.TouchEvent) => {
+    touchStartPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+
+  const handleTouchMovePad = (e: React.TouchEvent) => {
+    if (!touchStartPos.current) return;
+    const deltaX = e.touches[0].clientX - touchStartPos.current.x;
+    const deltaY = e.touches[0].clientY - touchStartPos.current.y;
+    
+    const activeThreshold = 20; 
+    let newDir: 'w' | 's' | 'a' | 'd' | null = null;
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > activeThreshold) {
+      newDir = deltaX > 0 ? 'd' : 'a';
+    } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > activeThreshold) {
+      newDir = deltaY > 0 ? 's' : 'w';
+    }
+
+    if (newDir && currentSwipeDir.current !== newDir) {
+      if (currentSwipeDir.current) {
+        handleEndMove(currentSwipeDir.current);
+      }
+      handleStartMove(newDir);
+      currentSwipeDir.current = newDir;
+    }
+  };
+
+  const handleTouchEndPad = () => {
+    touchStartPos.current = null;
+    if (currentSwipeDir.current) {
+      handleEndMove(currentSwipeDir.current);
+      currentSwipeDir.current = null;
+    }
   };
 
   useEffect(() => {
@@ -397,7 +474,13 @@ export const UI = () => {
             <div className="w-full flex justify-between items-end pointer-events-none">
               
               {/* Elegant D-pad for sliding crane (Left Side) */}
-              <div className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-3xl border-4 border-[#F7DBA7] flex items-center justify-center pointer-events-auto select-none scale-90 xs:scale-95 sm:scale-100 origin-bottom-left">
+              <div 
+                onTouchStart={handleTouchStartPad}
+                onTouchMove={handleTouchMovePad}
+                onTouchEnd={handleTouchEndPad}
+                onTouchCancel={handleTouchEndPad}
+                className="bg-[#FFFDF6]/95 backdrop-blur-md shadow-[0_6px_0_0_#F7DBA7] p-3 xs:p-4 sm:p-5 rounded-3xl border-4 border-[#F7DBA7] flex items-center justify-center pointer-events-auto select-none scale-90 xs:scale-95 sm:scale-100 origin-bottom-left"
+              >
                 <div className="grid grid-cols-3 gap-1 w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32">
                   <div></div>
                   <button
@@ -510,7 +593,7 @@ export const UI = () => {
             </div>
             
             <div className="space-y-2 mb-6 text-left bg-[#FAF3E5]/50 p-5 rounded-[24px] border-2 border-[#FCE6BD]">
-              <div className="text-[11px] font-black text-rose-500 tracking-wide mb-1.5">🏆 本局積分榜</div>
+              <div className="text-[11px] font-black text-rose-500 tracking-wide mb-1.5">🏆 歷史最高分排行榜</div>
               {gameOver.players.slice(0, 5).map((p: any, i: number) => (
                 <div key={p.id} className="flex justify-between items-center p-2 rounded-xl bg-white/70 border border-transparent hover:border-[#FFA6B9] transition-all">
                   <span className="font-black flex items-center gap-3" style={{ color: p.color }}>
@@ -522,18 +605,26 @@ export const UI = () => {
               ))}
             </div>
             
-            <button 
-              onClick={() => {
-                audio.playClickSFX();
-                if (gameOverName.trim().length >= 1 && gameOverName.trim().length <= 15) {
-                  join(gameOverName.trim());
-                }
-                useGameStore.setState({ gameOver: null });
-              }}
-              className="w-full bg-[#FF6B8B] hover:bg-[#FF5579] text-white font-black py-4 rounded-2xl shadow-md border-b-4 border-[#C93B58] transition-all active:translate-y-1 active:border-b-0 cursor-pointer select-none"
-            >
-              確認並繼續挑戰 🍭
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button 
+                onClick={handleShare}
+                className="w-full bg-[#FFD166] hover:bg-[#FFC436] text-amber-900 font-black py-4 rounded-2xl shadow-md border-b-4 border-[#E0A800] transition-all active:translate-y-1 active:border-b-0 cursor-pointer select-none flex items-center justify-center gap-2"
+              >
+                <Share2 size={20} /> 分享成績
+              </button>
+              <button 
+                onClick={() => {
+                  audio.playClickSFX();
+                  if (gameOverName.trim().length >= 1 && gameOverName.trim().length <= 15) {
+                    join(gameOverName.trim());
+                  }
+                  useGameStore.setState({ gameOver: null });
+                }}
+                className="w-full bg-[#FF6B8B] hover:bg-[#FF5579] text-white font-black py-4 rounded-2xl shadow-md border-b-4 border-[#C93B58] transition-all active:translate-y-1 active:border-b-0 cursor-pointer select-none"
+              >
+                確認並返回 🍭
+              </button>
+            </div>
           </div>
         </div>
       )}
